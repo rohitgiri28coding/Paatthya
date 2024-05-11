@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">SRIT Classes</string>
+    <string name="hide_password">Hide Password</string>
+    <string name="show_password">Show Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_your_password">Forgot your Password?</string>
+    <string name="background">Background</string>
+    <string name="hi_there">Hi There!</string>
+    <string name="welcome_msg">Welcome to your ultimate coding companion!         Study, track, analyze and conquer your programming journey.</string>
+    <string name="hey_there">Hey there,</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="new_password">New Password</string>
+    <string name="logo">logo</string>
+    <string name="welcome_to_srit">Welcome to SRIT!</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="ab_crack_hoga_har_exam">"                                   Ab Crack Hoga Har Exam!!"</string>
+    <string name="programming_languages_sikhna_hua_asan">Programming Languages Sikhna Hua Asan\n</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="reset_password_msg">Enter your email address and we\\\'ll send you a link to reset your password.</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="reset_link_sent_msg">A link has been sent on the provided email address to reset the password.\nAfter resetting the password click here to Login again.</string>
 </resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "539055371664",
+    "project_id": "srit-feea9",
+    "storage_bucket": "srit-feea9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539055371664:android:b6b63251397732aed5ef15",
+        "android_client_info": {
+          "package_name": "com.coaching.srit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChIkoqHnWww7AX_b0htF-pLOa2U95Yq5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

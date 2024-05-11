@@ -1,5 +1,6 @@
 package com.coaching.srit.ui.screens.forgotpassword
 
-class ForgotPasswordUiState {
-
-}
+data class ForgotPasswordUiState(
+    var email: String = "",
+    var emailError: Boolean = false
+)

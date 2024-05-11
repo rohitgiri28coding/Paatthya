@@ -1,4 +1,9 @@
 package com.coaching.srit.ui.screens.login
 
-class LoginUiState {
-}
+data class LoginUiState (
+    var email: String = "",
+    var password: String = "",
+
+    var emailError: Boolean = false,
+    var passwordError: Boolean = false,
+)
