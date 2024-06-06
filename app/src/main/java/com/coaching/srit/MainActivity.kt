@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.coaching.srit.ui.screens.home.HomeScreen
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
-import com.coaching.srit.ui.screens.HomeScreen
 import com.coaching.srit.ui.screens.WelcomeScreen
 import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreenResetLinkSent
@@ -51,7 +51,6 @@ class MainActivity : ComponentActivity() {
                     Screen.ForgotPasswordResetLinkSentScreen -> {
                         ForgotPasswordScreenResetLinkSent()
                     }
-
                     Screen.HomeScreen -> {
                         HomeScreen()
                     }

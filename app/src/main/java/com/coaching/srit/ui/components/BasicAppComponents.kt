@@ -3,10 +3,13 @@ package com.coaching.srit.ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -15,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -35,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -338,4 +343,27 @@ fun UnderlinedTextComposable(textValue: String, onClick:()->Unit){
         textAlign = TextAlign.Center,
         textDecoration = TextDecoration.Underline
     )
+}
+@Composable
+fun ClickableTextWithArrowSign(text: String, imageVector: ImageVector = Icons.Default.ChevronRight, onClick: () -> Unit){
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .border(1.dp, Color(0xFF3E6412))
+            .fillMaxWidth()
+            .clickable { onClick.invoke() }
+    ){
+        Text(
+            text = text,
+            color = Color.White,
+            modifier = Modifier.padding(top = 5.dp, start = 10.dp)
+        )
+        IconButton(onClick = {}) {
+            Icon(
+                imageVector = imageVector,
+                contentDescription = "RightArrow",
+                tint = Color.White
+            )
+        }
+    }
 }
