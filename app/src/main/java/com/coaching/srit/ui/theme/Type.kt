@@ -1,30 +1,33 @@
 package com.coaching.srit.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.coaching.srit.R
 
 
 val quicksandVariableFont = FontFamily(
-    Font(R.font.quicksand_variablefont_wght, weight = FontWeight.W400)
+    Font(R.font.quicksand_variablefont_wght, weight = FontWeight.W700)
 )
-val quicksandBodyStyle = TextStyle(
-    fontFamily = quicksandVariableFont,
-    fontWeight = FontWeight.W400,
-    fontSize = 16.sp
-)
-@OptIn(ExperimentalTextApi::class)
-val boldQuicksandVariableFont = FontFamily(
-    Font(R.font.quicksand_variablefont_wght, weight = FontWeight.W400, variationSettings = FontVariation.Settings(
-        FontVariation.weight(700)
-    ))
-)
+val interVariableFont = FontFamily(Font(R.font.inter_var))
+
+val irishFont = FontFamily(Font(R.font.irish_grover_regular))
+
+val metalFont = FontFamily(Font(R.font.metal_regular))
+
+val kanitMediumItalic = FontFamily(Font(R.font.kanit_medium_italic))
+
+val kanit_light = FontFamily(Font(R.font.kanit_light))
+
+val kaushanScriptRegular = FontFamily(Font(R.font.kanit_medium_italic))
+
+val metalMania = FontFamily(Font(R.font.metalmania_regular))
+
+val sedanRegular = FontFamily(Font(R.font.sedanregular))
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

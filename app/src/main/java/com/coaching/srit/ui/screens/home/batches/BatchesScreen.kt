@@ -8,5 +8,6 @@ import com.coaching.srit.ui.components.HeadingTextComposable
 fun BatchesScreen() {
     Column {
         HeadingTextComposable(textValue = "Batches")
+
     }
 }
