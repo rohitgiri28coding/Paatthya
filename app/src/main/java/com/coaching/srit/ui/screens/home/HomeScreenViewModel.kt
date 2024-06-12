@@ -28,7 +28,7 @@ class HomeScreenViewModel: ViewModel() {
             title = "Our Results",
             selectedIcon = Icons.Filled.Book,
             unselectedIcon = Icons.Outlined.Book,
-            badge = 30,
+            badge = 3,
             screenRoute = Screen.ResultScreen
         ),
         NavigationItem(
@@ -71,7 +71,7 @@ class HomeScreenViewModel: ViewModel() {
             unselectedIcon = Icons.AutoMirrored.Outlined.Chat,
             hasNews = false,
             screenRoute = HomeScreen.NoticeScreen,
-            badgeCount = 20
+            badgeCount = 3
         ),
         BottomNavigationItem(
             title = "About",
@@ -82,8 +82,10 @@ class HomeScreenViewModel: ViewModel() {
         )
     )
     var bottomBarSelectedItemIndex = mutableIntStateOf(0)
+        private set
 
     var navigationDrawerSelectedItemIndex = mutableIntStateOf(5)
+        private set
     fun updateBottomBarIndex(index: Int) {
         bottomBarSelectedItemIndex.intValue = index
     }

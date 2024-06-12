@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import com.coaching.srit.R
 import com.coaching.srit.ui.components.ClickableImageComposable
 import com.coaching.srit.ui.components.Spacing
+import com.coaching.srit.ui.navigation.Router
+import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.theme.irishFont
 import com.coaching.srit.ui.theme.kaushanScriptRegular
 import com.coaching.srit.ui.theme.metalFont
@@ -88,13 +90,21 @@ fun StudyScreen(){
             )
             Spacing()
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_batches, contentDesc = "My Batches"){}
-                ClickableImageComposable(img = R.drawable.recently_watched, contentDesc = "Recently Watched"){}
+                ClickableImageComposable(img = R.drawable.my_batches, contentDesc = "My Batches"){
+                    Router.navigateTo(Screen.MyBatchScreen)
+                }
+                ClickableImageComposable(img = R.drawable.recently_watched, contentDesc = "Recently Watched"){
+                    Router.navigateTo(Screen.RecentlyWatchedScreen)
+                }
             }
             Spacing(size = 25.dp)
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_doubts, contentDesc = "My Doubts"){}
-                ClickableImageComposable(img = R.drawable.my_downloads, contentDesc = "My Downloads"){}
+                ClickableImageComposable(img = R.drawable.my_doubts, contentDesc = "My Doubts"){
+                    Router.navigateTo(Screen.MyDoubtsScreen)
+                }
+                ClickableImageComposable(img = R.drawable.my_downloads, contentDesc = "My Downloads"){
+                    Router.navigateTo(Screen.MyDownloadsScreen)
+                }
             }
         }
         Spacing()
@@ -135,7 +145,7 @@ fun StudyScreen(){
                 )
             }
             Spacing()
-            Text(text = "Made with LOVE by RASS", color = Color(0xFFCACDD8), fontFamily = sedanRegular)
+            Text(text = "Made with ❤ by RASS", color = Color(0xFFCACDD8), fontFamily = sedanRegular)
         }
     }
 }

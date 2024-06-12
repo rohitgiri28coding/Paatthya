@@ -14,6 +14,10 @@ sealed class Screen {
     data object ContactUsScreen: Screen()
     data object ResultScreen: Screen()
     data object GalleryScreen: Screen()
+    data object MyBatchScreen: Screen()
+    data object MyDoubtsScreen: Screen()
+    data object RecentlyWatchedScreen: Screen()
+    data object MyDownloadsScreen: Screen()
 }
 object Router {
     var currentScreen: MutableState<Screen> = mutableStateOf(Screen.HomeScreen)

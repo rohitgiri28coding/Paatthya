@@ -1,10 +1,14 @@
 package com.coaching.srit.ui.screens.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Dehaze
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -28,23 +32,31 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ClickableTextWithArrowSign
 import com.coaching.srit.ui.components.HeadingTextComposable
 import com.coaching.srit.ui.components.NormalTextComposable
+import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.navigation.HomeScreen
 import com.coaching.srit.ui.navigation.HomeScreenRouter
 import com.coaching.srit.ui.navigation.HomeScreenRouter.currentScreen
 import com.coaching.srit.ui.navigation.Router
+import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.screens.home.about.AboutScreen
 import com.coaching.srit.ui.screens.home.batches.BatchesScreen
 import com.coaching.srit.ui.screens.home.notice.NoticeScreen
 import com.coaching.srit.ui.screens.home.study.StudyScreen
+import com.coaching.srit.ui.theme.sedanRegular
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -91,11 +103,11 @@ private fun HomeNavigationDrawer(
         drawerContainerColor = Color(0xFF16171A),
         drawerContentColor = Color(0xFF121316)
     ) {
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacing(size = 20.dp)
         HeadingTextComposable(textValue = "S.R.I.T")
-        Spacer(modifier = Modifier.size(40.dp))
+        Spacing()
         HorizontalDivider()
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacing(size = 20.dp)
         homeScreenViewModel.navDrawerItems.forEachIndexed { index, item ->
             NavigationDrawerItem(
                 label = {
@@ -112,6 +124,7 @@ private fun HomeNavigationDrawer(
                 onClick = {
                     homeScreenViewModel.updateNavigationDrawerIndex(index)
                     Router.navigateTo(item.screenRoute)
+                    homeScreenViewModel.updateNavigationDrawerIndex(5)
                     if (item.badge != null) {
                         homeScreenViewModel.updateNavBadgeCount(index, 0)
                     }
@@ -122,7 +135,8 @@ private fun HomeNavigationDrawer(
                 icon = {
                     Icon(
                         imageVector = if (index == homeScreenViewModel.navigationDrawerSelectedItemIndex.intValue) item.selectedIcon else item.unselectedIcon,
-                        contentDescription = item.title
+                        contentDescription = item.title,
+                        tint = Color.White
                     )
                 },
                 badge = {
@@ -130,6 +144,41 @@ private fun HomeNavigationDrawer(
                         Text(text = item.badge.toString(), color = Color.White)
                     }
                 }
+            )
+        }
+        Spacing(size = 20.dp)
+        HorizontalDivider()
+        LogoutComponent()
+    }
+}
+
+@Composable
+private fun LogoutComponent() {
+    Row(modifier = Modifier
+        .clickable { Router.navigateTo(Screen.LoginScreen) }
+        .fillMaxWidth()
+        .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center) {
+        Text(
+            text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        fontFamily = sedanRegular
+                    )
+                ) {
+                    append("Logout")
+                }
+            },
+            modifier = Modifier.padding(bottom = 2.dp)
+        )
+        IconButton(onClick = {}) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.Logout,
+                contentDescription = "Logout",
+                tint = Color.White
             )
         }
     }

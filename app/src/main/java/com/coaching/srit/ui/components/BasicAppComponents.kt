@@ -1,6 +1,8 @@
 package com.coaching.srit.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,6 +19,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -48,10 +54,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -62,6 +71,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -72,7 +83,10 @@ import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.theme.DarkGreen
 import com.coaching.srit.ui.theme.Primary
 import com.coaching.srit.ui.theme.Shape
+import com.coaching.srit.ui.theme.interVariableFont
+import com.coaching.srit.ui.theme.kanit_light
 import com.coaching.srit.ui.theme.quicksandVariableFont
+import com.coaching.srit.ui.theme.sedanRegular
 
 @Composable
 fun LabelComponent(textValue: String){
@@ -209,6 +223,7 @@ fun BackgroundImage() {
     Image(
         painter = painterResource(id = R.drawable.background_green),
         contentDescription = stringResource(R.string.background),
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier.fillMaxSize(1f)
     )
 }
@@ -549,4 +564,242 @@ fun TopAppBarWithBackButton(text: String, topAppBarColor: Color = Color.Transpar
         },
         colors  = TopAppBarDefaults.topAppBarColors(topAppBarColor)
     )
+}
+@Composable
+fun GenerateFeedComponent(name: String, timeStamp: String, messages: List<String>, image: Int) {
+    Column {
+        Row(modifier = Modifier.padding(start = 8.dp)) {
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = "Profile",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(
+                        CircleShape
+                    )
+                    .border(2.dp, Color.DarkGray, CircleShape)
+                    .size(50.dp)
+            )
+            Column(modifier = Modifier.padding(start = 10.dp)) {
+                Spacing(size = 2.dp)
+                NameAndTimeStamp(name = name, timeStamp = timeStamp)
+                Spacing(size = 4.dp)
+                messages.forEach {
+                    TextInRoundedBox(message = it)
+                }
+            }
+        }
+    }
+}
+@Composable
+fun NameAndTimeStamp(name: String, timeStamp: String){
+    Text(text = buildAnnotatedString {
+        withStyle(style = SpanStyle(
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )){
+            append("$name   ")
+        }
+        withStyle(style = SpanStyle(
+            color = Color.White,
+            fontSize = 13.sp,
+        )){
+            append(timeStamp)
+        }
+    }, fontFamily = kanit_light)
+}
+@Composable
+fun TextInRoundedBox(message: String) {
+    var isExpanded by remember { mutableStateOf(false) }
+    Column (modifier = Modifier.padding(end = 20.dp)){
+        Box(
+            modifier = Modifier
+                .clip(
+                    RoundedCornerShape(
+                        bottomEnd = 16.dp,
+                        topEnd = 16.dp,
+                        bottomStart = 16.dp
+                    )
+                )
+                .background(Color(0xFF275836))
+                .padding(16.dp)
+        ) {
+            Text(
+                text = message,
+                color = Color.White,
+                fontFamily = interVariableFont,
+                textAlign = TextAlign.Left,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .animateContentSize()
+                    .clickable { isExpanded = !isExpanded },
+                maxLines = if (isExpanded) Int.MAX_VALUE else 5
+            )
+        }
+        Spacing(size = 10.dp)
+    }
+}
+@Composable
+fun DateDivider(date: String) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        HorizontalDivider(modifier = Modifier.weight(1f))
+        Text(
+            text = date,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(start = 5.dp, end = 5.dp)
+        )
+        HorizontalDivider(modifier = Modifier.weight(1f))
+    }
+}
+@Composable
+fun GalleryComponent(img: Int, title: String, onClick: () -> Unit){
+    Box(
+        modifier = Modifier
+            .clickable { onClick.invoke() }
+            .clip(
+                RoundedCornerShape(
+                    bottomEnd = 25.dp,
+                    topEnd = 25.dp,
+                    bottomStart = 25.dp
+                )
+            )
+            .border(
+                width = 2.dp,
+                color = Color.White,
+                shape = RoundedCornerShape(
+                    bottomEnd = 25.dp,
+                    topEnd = 25.dp,
+                    bottomStart = 25.dp
+                )
+            )
+    ) {
+        Image(
+            painter = painterResource(id = img),
+            contentDescription = title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(180.dp)
+        )
+        Text(
+            text = title,
+            fontFamily = sedanRegular,
+            fontSize = 20.sp,
+            color = Color.White,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 5.dp)
+        )
+    }
+
+}
+@Composable
+fun GalleryRowComponent(img1: Int, img2: Int, title1: String, title2: String, onClick1: () -> Unit, onClick2: () -> Unit) {
+    Spacing()
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        GalleryComponent(img = img1, title = title1){
+            onClick1.invoke()
+        }
+        if (img2 != 0) {
+            GalleryComponent(img = img2, title = title2) {
+                onClick2.invoke()
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SwipeableBatchComponent(images: List<Int> /*, titles: List<String>, onClick: () -> Unit*/) {
+    val pagerState = rememberPagerState(pageCount = { images.size })
+    HorizontalPager(state = pagerState, key = {it.hashCode()}) { index->
+        Box {
+            ImageSliderComponent(images[index])
+            Row (modifier = Modifier.align(Alignment.BottomCenter)){
+                images.forEachIndexed { index, _ ->
+                    IndicatorComponent(active = pagerState.currentPage == index)
+                    if (index < images.size - 1){
+                        Spacer(modifier = Modifier.width(5.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ImageSliderComponent(img: Int) {
+    Image(
+        painter = painterResource(id = img),
+        contentDescription = "",
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .fillMaxWidth()
+    )
+}
+
+@Composable
+fun IndicatorComponent(active: Boolean){
+    val color  = if (active) Color(0xFFAC2222) else Color.White
+    Box(modifier = Modifier
+        .clip(CircleShape)
+        .background(color)
+        .size(10.dp))
+}
+
+@Composable
+fun BatchComponent(title: String, img: Int, detail: String, onClick: () -> Unit){
+    Column (modifier = Modifier
+        .fillMaxWidth()
+        .border(2.dp, Color.White)
+        .padding(8.dp)){
+        Column(modifier = Modifier
+            .clickable { onClick.invoke() }) {
+            NormalTextComposable(
+                textValue = title,
+                fontSize = 20.sp,
+                )
+            Box(modifier = Modifier) {
+                Image(
+                    painter = painterResource(id = img),
+                    contentDescription = title,
+                    contentScale = ContentScale.Fit
+                )
+            }
+            DetailedTextComposable(text = detail)
+            HorizontalDivider()
+            Spacing(size = 20.dp)
+            Row (modifier = Modifier.fillMaxWidth()){
+                Text(text = buildAnnotatedString {
+                    append("                     ")
+                    withStyle(style = SpanStyle(
+                        color = Color.White,
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold
+                    )){
+                        append("₹6,000/-")
+                    }
+                    append("   ")
+                    withStyle(style = SpanStyle(
+                        color = Color.White,
+                        textDecoration = TextDecoration.LineThrough,
+                        fontSize = 20.sp
+                    )){
+                         append("₹18,000/-")
+                    }
+                },
+                    fontFamily = sedanRegular,
+                    textAlign = TextAlign.Center)
+            }
+        }
+        Spacing(size = 20.dp)
+        Column {
+            TransparentButtonComponent(value = "Explore") {
+            }
+            Spacing(size = 10.dp)
+            ButtonComponent(value = "Buy Now"){}
+        }
+        Spacing(size = 10.dp)
+    }
 }

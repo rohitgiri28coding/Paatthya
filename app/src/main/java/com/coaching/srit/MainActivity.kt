@@ -17,6 +17,10 @@ import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreenResetLinkSent
 import com.coaching.srit.ui.screens.home.contactus.ContactUs
 import com.coaching.srit.ui.screens.home.gallery.GalleryScreen
+import com.coaching.srit.ui.screens.home.my_learning.MyBatchesScreen
+import com.coaching.srit.ui.screens.home.my_learning.MyDoubtsScreen
+import com.coaching.srit.ui.screens.home.my_learning.MyDownloadsScreen
+import com.coaching.srit.ui.screens.home.my_learning.RecentlyWatchedScreen
 import com.coaching.srit.ui.screens.home.result.ResultScreen
 import com.coaching.srit.ui.screens.home.termsandconditions.TermsAndConditionsScreen
 import com.coaching.srit.ui.screens.login.LoginScreen
@@ -69,6 +73,19 @@ class MainActivity : ComponentActivity() {
                     }
                     Screen.TermsAndConditionsScreen -> {
                         TermsAndConditionsScreen()
+                    }
+
+                    Screen.MyBatchScreen -> {
+                        MyBatchesScreen()
+                    }
+                    Screen.MyDoubtsScreen -> {
+                        MyDoubtsScreen()
+                    }
+                    Screen.MyDownloadsScreen -> {
+                        MyDownloadsScreen()
+                    }
+                    Screen.RecentlyWatchedScreen -> {
+                        RecentlyWatchedScreen()
                     }
                 }
             }

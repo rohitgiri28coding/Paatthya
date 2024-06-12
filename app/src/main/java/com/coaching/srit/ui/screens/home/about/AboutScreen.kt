@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.coaching.srit.R
@@ -23,14 +24,16 @@ import com.coaching.srit.ui.components.Spacing
 @Composable
 fun AboutScreen() {
     Column (modifier = Modifier.verticalScroll(rememberScrollState())){
+        Spacing(size = 20.dp)
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
-                painter = painterResource(id = R.drawable.profile_img),
+                painter = painterResource(id = R.drawable.profile_blue_pic),
                 contentDescription = "Profile Image",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .align(Alignment.Center)
                     .border(1.dp, Color.DarkGray)
-                    .size(width = 200.dp, height = 300.dp)
+                    .size(width = 250.dp, height = 300.dp)
             )
         }
         Spacing(size = 25.dp)
