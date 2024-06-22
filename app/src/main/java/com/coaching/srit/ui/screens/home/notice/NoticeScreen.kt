@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.coaching.srit.ui.components.DateDivider
+import com.coaching.srit.ui.components.TextDivider
 import com.coaching.srit.ui.components.GenerateFeedComponent
 import com.coaching.srit.ui.components.Spacing
 
@@ -27,7 +27,7 @@ fun NoticeScreen(noticeViewModel: NoticeViewModel = viewModel()) {
             )
             if (it.date.isNotEmpty()) {
                 Spacing(size = 20.dp)
-                DateDivider(date = it.date)
+                TextDivider(text = it.date)
             }
             Spacing(size = 10.dp)
         }

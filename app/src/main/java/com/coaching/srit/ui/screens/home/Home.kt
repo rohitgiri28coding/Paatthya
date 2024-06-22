@@ -57,6 +57,7 @@ import com.coaching.srit.ui.screens.home.batches.BatchesScreen
 import com.coaching.srit.ui.screens.home.notice.NoticeScreen
 import com.coaching.srit.ui.screens.home.study.StudyScreen
 import com.coaching.srit.ui.theme.sedanRegular
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -113,7 +114,7 @@ private fun HomeNavigationDrawer(
                 label = {
                     NormalTextComposable(
                         textValue = item.title,
-                        textAlign = TextAlign.Start
+                        textAlign = TextAlign.Start,
                     )
                 },
                 selected = index == homeScreenViewModel.navigationDrawerSelectedItemIndex.intValue,
@@ -155,7 +156,11 @@ private fun HomeNavigationDrawer(
 @Composable
 private fun LogoutComponent() {
     Row(modifier = Modifier
-        .clickable { Router.navigateTo(Screen.LoginScreen) }
+        .clickable {
+            FirebaseAuth
+                .getInstance()
+                .signOut()
+            Router.navigateTo(Screen.LoginScreen) }
         .fillMaxWidth()
         .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,

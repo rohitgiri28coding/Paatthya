@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
 sealed class Screen {
+    data object SplashScreen: Screen()
     data object SignUpScreen: Screen()
     data object LoginScreen: Screen()
     data object ForgotPasswordScreen: Screen()
@@ -20,8 +21,8 @@ sealed class Screen {
     data object MyDownloadsScreen: Screen()
 }
 object Router {
-    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.HomeScreen)
-
+    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.ResultScreen)
+//retrieve
     fun navigateTo(destination: Screen){
         currentScreen.value = destination
     }

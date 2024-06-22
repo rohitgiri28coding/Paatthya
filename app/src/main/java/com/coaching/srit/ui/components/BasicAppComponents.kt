@@ -1,5 +1,6 @@
 package com.coaching.srit.ui.components
 
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -22,10 +23,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
@@ -89,39 +93,74 @@ import com.coaching.srit.ui.theme.quicksandVariableFont
 import com.coaching.srit.ui.theme.sedanRegular
 
 @Composable
-fun LabelComponent(textValue: String){
-    Text(
-        text = textValue,
-        color = Color.LightGray,
-        textAlign = TextAlign.Start,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal,
-        modifier = Modifier.padding(bottom = 5.dp)
-    )
-}
-@Composable
 fun NormalTextComposable(
     textValue: String,
     fontSize: TextUnit = 24.sp,
     color: Color = Color.White,
-    textAlign: TextAlign=TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
+    startPadding: Dp = 0.dp,
+    endPadding: Dp = 0.dp,
+    topPadding: Dp = 0.dp,
+    bottomPadding: Dp = 0.dp,
+    fontWeight: FontWeight = FontWeight.Normal
 ){
     Text(
         text = textValue,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(
+                start = startPadding,
+                end = endPadding,
+                top = topPadding,
+                bottom = bottomPadding
+            )
             .heightIn(min = 40.dp),
         style = TextStyle(
             fontSize = fontSize,
-            fontWeight = FontWeight.Normal,
+            fontWeight = fontWeight,
             fontStyle = FontStyle.Normal
         ),
         color =  color,      //colorResource(id= R.color.colorText) other method
         textAlign = textAlign,
-        fontFamily = FontFamily(Font(R.font.sedanregular, weight = FontWeight.W400))
+        fontFamily = FontFamily(
+            Font(
+                resId = R.font.sedanregular
+            )
+        )
     )
 }
+@Composable
+fun ClickableLoginTextComponent(txt: String, clickableText: String,onTextSelected: (String) -> Unit){
+    val annotatedString = buildAnnotatedString {
+        append(txt)
+        withStyle(style = SpanStyle(color = Primary)){
+            pushStringAnnotation(tag = clickableText, annotation = clickableText)
+            append(clickableText)
+        }
+    }
+    ClickableText(text = annotatedString,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            color = Color(0xFFCFD5CC),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            textAlign = TextAlign.Center,
+            fontFamily = interVariableFont
+        ),) {offset->
+        annotatedString.getStringAnnotations(offset,offset)
+            .firstOrNull()?.also { span->
+                Log.d("ClickableTextComponent", span.toString())
+                if (span.item == clickableText){
+                    onTextSelected(span.item)
+                }
+            }
+
+    }
+}
+
 @Composable
 fun HeadingTextComposable(
     textValue: String,
@@ -166,7 +205,7 @@ fun ButtonComponent(
                 .heightIn(55.dp)
                 .background(
                     brush = Brush.horizontalGradient(
-                        listOf(Color(0xFF0FFD23), Color(0xFF057E11))
+                        listOf(Color(0xFF1DE22D), Color(0xFF13751D))
                     ), shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center
@@ -175,7 +214,7 @@ fun ButtonComponent(
                 text = value,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W900,
-                color = Color.Black
+                color = Color.White
             )
         }
     }
@@ -382,7 +421,6 @@ fun ClickableTextWithArrowSign(text: String, imageVector: ImageVector = Icons.De
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .padding(top = 5.dp, start = 10.dp)
-//            .border(1.dp, Color(0xFF3E6412))
             .fillMaxWidth()
             .clickable { onClick.invoke() }
     ) {
@@ -416,34 +454,48 @@ fun ReviewComposable(img: Int , review: String , name: String, designation: Stri
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 10.dp)
-
+                .align(Alignment.Center)
         ) {
+            Spacing()
             Image(
                 painter = painterResource(id = img),
                 contentDescription = "$name image",
                 modifier = Modifier.size(height = 400.dp, width = 420.dp)
             )
-            Spacer(modifier = Modifier.size(30.dp))
-            NormalTextComposable(textValue = "                    $name", fontSize = 30.sp)
-            Spacer(modifier = Modifier.size(3.dp))
-            NormalTextComposable(
-                textValue = "                          $designation",
-                fontSize = 20.sp
-            )
-            Box (Modifier.size(width = 360.dp, height = 200.dp)){
-                Text(
-                    text = review,
+            Spacing()
+            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                NormalTextComposable(
+                    textValue = name,
+                    fontSize = 30.sp,
+                    startPadding = 5.dp
+                )
+                Spacing(size = 3.dp)
+                NormalTextComposable(
+                    textValue = designation,
+                    fontSize = 20.sp,
+                )
+            }
+            Box (
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .size(width = 360.dp, height = 200.dp)
+                    .verticalScroll(rememberScrollState())){
+                NormalTextComposable(
+                    textValue = review,
                     fontSize = 18.sp,
-                    modifier = Modifier.padding(start = 25.dp),
                     color = Color(0xFFCACDD8),
-                    fontFamily = FontFamily(Font(R.font.sedanregular, weight = FontWeight.W400))
                 )
             }
         }
     }
 }
 @Composable
-fun FAQComposable(text: String, imageVector: ImageVector = Icons.Default.ChevronRight, fontFamily: Int = R.font.kanit_medium_italic, onClick: () -> Unit){
+fun FAQComposable(
+    text: String,
+    imageVector: ImageVector = Icons.Default.ChevronRight,
+    fontFamily: Int = R.font.kanit_medium_italic,
+    onClick: () -> Unit
+){
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -523,11 +575,11 @@ fun NormalHeadingAndDetailedText(heading: String, detail: String){
     Column(modifier = Modifier
         .padding(15.dp)
         .border(1.dp, Color.DarkGray)) {
-        Spacer(modifier = Modifier.size(5.dp))
+        Spacing(size = 5.dp)
         NormalTextComposable(
             textValue = heading,
+            fontSize = 20.sp,
             textAlign = TextAlign.Start,
-            fontSize = 20.sp
         )
         HorizontalDivider()
         DetailedTextComposable(text = detail)
@@ -538,11 +590,13 @@ fun Spacing(size: Dp = 30.dp){
     Spacer(modifier = Modifier.size(size))
 }
 @Composable
-fun ClickableImageComposable(img: Int, contentDesc: String, onClick: () -> Unit){
+fun ClickableImageComposable(img: Int, contentDesc: String, padding: Dp=0.dp, onClick: () -> Unit){
     Image(
         painter = painterResource(id = img),
         contentDescription = contentDesc,
-        modifier = Modifier.clickable { onClick() }
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(padding)
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -641,11 +695,11 @@ fun TextInRoundedBox(message: String) {
     }
 }
 @Composable
-fun DateDivider(date: String) {
+fun TextDivider(text: String) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         HorizontalDivider(modifier = Modifier.weight(1f))
         Text(
-            text = date,
+            text = text,
             color = Color.White,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(start = 5.dp, end = 5.dp)

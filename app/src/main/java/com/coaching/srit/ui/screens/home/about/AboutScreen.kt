@@ -52,7 +52,6 @@ fun AboutScreen() {
                 "Comprehensive Support: We provide online services, industrial training, certification courses, workshops, project training, and job placement assistance.",
         )
         Spacing(size = 20.dp)
-//        Spacer(modifier = Modifier.size(20.dp))
         NormalTextComposable(textValue = "About Our Director")
         DetailedTextComposable(text = "Shubham Raj, the visionary behind S.R.I.T, is renowned for his unique and effective teaching style. With a background rich in practical and academic achievements, Shubham Raj has worked on numerous projects under \"Beltron Bihar Government\" during his MCA tenure. His extensive experience and passion for teaching have enabled him to mentor and place hundreds of students in prestigious organizations.\n" +
                 "\n" +

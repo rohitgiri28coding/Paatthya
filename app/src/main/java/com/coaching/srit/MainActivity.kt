@@ -8,10 +8,15 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.coaching.srit.ui.screens.home.Home
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
+import com.coaching.srit.ui.screens.splashscreen.SplashScreen
 import com.coaching.srit.ui.screens.WelcomeScreen
 import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreen
 import com.coaching.srit.ui.screens.forgotpassword.ForgotPasswordScreenResetLinkSent
@@ -26,22 +31,29 @@ import com.coaching.srit.ui.screens.home.termsandconditions.TermsAndConditionsSc
 import com.coaching.srit.ui.screens.login.LoginScreen
 import com.coaching.srit.ui.screens.signup.SignUpScreen
 import com.coaching.srit.ui.theme.SRITTheme
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
+    private val auth: FirebaseAuth by lazy { Firebase.auth }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             SRITTheme {
-                App()
+                App(auth = auth)
             }
         }
     }
     @Composable
-    private fun App(){
+    private fun App(auth: FirebaseAuth) {
         Surface(modifier = Modifier.fillMaxSize()) {
             Crossfade(targetState = Router.currentScreen, label = "") { currentState->
                 when(currentState.value){
+                    Screen.SplashScreen -> {
+                        SplashScreen()
+                    }
                     Screen.SignUpScreen -> {
                         SignUpScreen()
                     }
@@ -51,11 +63,9 @@ class MainActivity : ComponentActivity() {
                     Screen.ForgotPasswordScreen -> {
                         ForgotPasswordScreen()
                     }
-
                     Screen.WelcomeScreen -> {
                         WelcomeScreen()
                     }
-
                     Screen.ForgotPasswordResetLinkSentScreen -> {
                         ForgotPasswordScreenResetLinkSent()
                     }
@@ -92,3 +102,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+//@Composable
+//fun WelcomeOrHome(auth: FirebaseAuth){
+//    var user by remember {
+//        mutableStateOf(auth.currentUser)
+//    }
+//    if(user == null){
+//        Router.navigateTo(Screen.WelcomeScreen)
+//    }else{
+//        Router.navigateTo(Screen.HomeScreen)
+//    }
+//}

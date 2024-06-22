@@ -82,7 +82,6 @@ class LoginViewModel: ViewModel(){
                     Router.navigateTo(Screen.HomeScreen)
                 } else {
                     Log.w(TAG, "Login failed.", task.exception)
-                    // Handle login failure (e.g., display error message to user)
                 }
             }
             .addOnFailureListener{

@@ -11,13 +11,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coaching.srit.R
+import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ButtonComponent
 import com.coaching.srit.ui.components.HeadingTextComposable
 import com.coaching.srit.ui.components.NormalTextComposable
@@ -28,11 +28,7 @@ import com.coaching.srit.ui.navigation.Screen
 @Composable
 fun WelcomeScreen(){
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.background_green),
-            contentDescription = "Background",
-            modifier = Modifier.fillMaxSize(1f)
-        )
+        BackgroundImage()
         Column(modifier = Modifier
             .align(Alignment.Center)
             .padding(bottom = 100.dp)) {
@@ -56,7 +52,7 @@ fun WelcomeScreen(){
                     append(stringResource(R.string.ab_crack_hoga_har_exam))
                 },
                 fontSize = 16.sp,
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Left,
             )
             Spacer(modifier = Modifier.height(40.dp))
             TransparentButtonComponent(value = stringResource(R.string.sign_in)) {
