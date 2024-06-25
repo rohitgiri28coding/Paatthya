@@ -21,6 +21,7 @@ import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ButtonComponent
 import com.coaching.srit.ui.components.HeadingTextComposable
 import com.coaching.srit.ui.components.NormalTextComposable
+import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.components.TransparentButtonComponent
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
@@ -29,23 +30,24 @@ import com.coaching.srit.ui.navigation.Screen
 fun WelcomeScreen(){
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage()
-        Column(modifier = Modifier
-            .align(Alignment.Center)
-            .padding(bottom = 100.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.sritlogo),
                 contentDescription = stringResource(R.string.logo),
-                modifier = Modifier.size(120.dp)
+                modifier = Modifier
+                    .size(120.dp)
+                    .align(Alignment.CenterHorizontally)
             )
-        }
-        Column (modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .padding(bottom = 70.dp, start = 25.dp, end = 20.dp)){
+            Spacing()
             HeadingTextComposable(
                 textValue = stringResource(R.string.welcome_to_srit),
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacing(size = 10.dp)
             NormalTextComposable(
                 textValue = buildString {
                     append(stringResource(R.string.programming_languages_sikhna_hua_asan))
@@ -54,7 +56,7 @@ fun WelcomeScreen(){
                 fontSize = 16.sp,
                 textAlign = TextAlign.Left,
             )
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacing()
             TransparentButtonComponent(value = stringResource(R.string.sign_in)) {
                 Router.navigateTo(Screen.LoginScreen)
             }
@@ -62,6 +64,7 @@ fun WelcomeScreen(){
             ButtonComponent(value = stringResource(R.string.sign_up)) {
                 Router.navigateTo(Screen.SignUpScreen)
             }
+            Spacing(size = 60.dp)
         }
     }
 }

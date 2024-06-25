@@ -31,7 +31,6 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen() {
     var navigateToWelcome by remember { mutableStateOf(false) }
-
     LaunchedEffect(key1 = !navigateToWelcome) {
         delay(2000)
         navigateToWelcome = true

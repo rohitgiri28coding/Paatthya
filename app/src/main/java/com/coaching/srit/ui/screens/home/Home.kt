@@ -51,18 +51,20 @@ import com.coaching.srit.ui.navigation.HomeScreen
 import com.coaching.srit.ui.navigation.HomeScreenRouter
 import com.coaching.srit.ui.navigation.HomeScreenRouter.currentScreen
 import com.coaching.srit.ui.navigation.Router
-import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.screens.home.about.AboutScreen
 import com.coaching.srit.ui.screens.home.batches.BatchesScreen
 import com.coaching.srit.ui.screens.home.notice.NoticeScreen
 import com.coaching.srit.ui.screens.home.study.StudyScreen
 import com.coaching.srit.ui.theme.sedanRegular
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @Composable
-fun Home(homeScreenViewModel: HomeScreenViewModel = viewModel()){
+fun Home(
+    homeScreenViewModel: HomeScreenViewModel = viewModel(),
+    onSignOut: () -> Job
+){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -71,7 +73,7 @@ fun Home(homeScreenViewModel: HomeScreenViewModel = viewModel()){
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
-                HomeNavigationDrawer(homeScreenViewModel, scope, drawerState)
+                HomeNavigationDrawer(homeScreenViewModel, scope, drawerState, onSignOut)
             },
         ) {
             Scaffold(
@@ -98,7 +100,8 @@ fun Home(homeScreenViewModel: HomeScreenViewModel = viewModel()){
 private fun HomeNavigationDrawer(
     homeScreenViewModel: HomeScreenViewModel,
     scope: CoroutineScope,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    onSignOut: () -> Job
 ) {
     ModalDrawerSheet(
         drawerContainerColor = Color(0xFF16171A),
@@ -149,18 +152,16 @@ private fun HomeNavigationDrawer(
         }
         Spacing(size = 20.dp)
         HorizontalDivider()
-        LogoutComponent()
+        LogoutComponent(onSignOut)
     }
 }
 
 @Composable
-private fun LogoutComponent() {
+private fun LogoutComponent(onSignOut: () -> Job) {
     Row(modifier = Modifier
         .clickable {
-            FirebaseAuth
-                .getInstance()
-                .signOut()
-            Router.navigateTo(Screen.LoginScreen) }
+          onSignOut.invoke()
+        }
         .fillMaxWidth()
         .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,

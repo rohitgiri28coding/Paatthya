@@ -5,9 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.coaching.srit.data.uievent.rules.Validator
 import com.coaching.srit.data.uievent.signup.SignUpUiEvent
-import com.coaching.srit.ui.navigation.Router
-import com.coaching.srit.ui.navigation.Screen
-import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel: ViewModel() {
 
@@ -18,6 +15,7 @@ class SignUpViewModel: ViewModel() {
     var allValidationPassed = mutableStateOf(false)
 
     var signUpInProgress = mutableStateOf(false)
+
     fun onEvent(event: SignUpUiEvent){
         when(event){
             is SignUpUiEvent.EmailChange -> {
@@ -32,23 +30,19 @@ class SignUpViewModel: ViewModel() {
                 )
                 printState()
             }
-            is SignUpUiEvent.RegisterButtonClicked -> {
-                signUp()
-            }
+//            is SignUpUiEvent.RegisterButtonClicked -> {
+//
+//            }
         }
         validateDataWithRules()
     }
 
-    private fun signUp() {
-        Log.d(TAG, "Inside signup")
-        printState()
-
-        createUserInFirebase(
-            email = registrationUiState.value.email,
-            password = registrationUiState.value.password
-        )
+    fun getEmail(): String {
+        return registrationUiState.value.email
     }
-
+    fun getPassword(): String {
+        return registrationUiState.value.password
+    }
     private fun validateDataWithRules() {
         val emailResult = Validator.validateEmail(
             registrationUiState.value.email
@@ -73,25 +67,35 @@ class SignUpViewModel: ViewModel() {
         Log.d(TAG, "Inside printState")
         Log.d(TAG, registrationUiState.value.toString())
     }
-
-    private fun createUserInFirebase(email: String, password: String){
-        signUpInProgress.value = true
-        FirebaseAuth
-            .getInstance()
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d(TAG, "Inside on complete listener")
-                Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
-                signUpInProgress.value = false
-                if (it.isSuccessful) {
-                    Router.navigateTo(Screen.HomeScreen)
-                }
-            }
-            .addOnFailureListener{
-                signUpInProgress.value = false
-                Log.d(TAG, "Inside on failure listener")
-                Log.d(TAG, "Exception -> ${it.message}")
-                Log.d(TAG, "Exception -> ${it.printStackTrace()}")
-            }
-    }
+//    fun signUp(auth: FirebaseAuth, onSignedIn: (FirebaseUser) -> Unit) {
+//        Log.d(TAG, "Inside signup")
+//        printState()
+//
+//        createUserInFirebase(
+//            auth = auth,
+//            email = registrationUiState.value.email,
+//            password = registrationUiState.value.password
+//        ){
+//            onSignedIn(it)
+//        }
+//    }
+//    private fun createUserInFirebase(auth: FirebaseAuth, email: String, password: String, onSignedIn: (FirebaseUser) -> Unit){
+//        signUpInProgress.value = true
+//        auth
+//            .createUserWithEmailAndPassword(email, password)
+//            .addOnCompleteListener {
+//                Log.d(TAG, "Inside on complete listener")
+//                Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
+//                signUpInProgress.value = false
+//                if (it.isSuccessful) {
+//                    auth.currentUser?.let { it1 -> onSignedIn(it1) }
+//                }
+//            }
+//            .addOnFailureListener{
+//                signUpInProgress.value = false
+//                Log.d(TAG, "Inside on failure listener")
+//                Log.d(TAG, "Exception -> ${it.message}")
+//                Log.d(TAG, "Exception -> ${it.printStackTrace()}")
+//            }
+//    }
 }

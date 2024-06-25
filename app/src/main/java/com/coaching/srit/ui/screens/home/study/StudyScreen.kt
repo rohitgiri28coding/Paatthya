@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coaching.srit.R
 import com.coaching.srit.ui.components.ClickableImageComposable
+import com.coaching.srit.ui.components.NormalTextComposable
 import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
@@ -82,11 +85,11 @@ fun StudyScreen(){
         HorizontalDivider()
         Spacing()
         Column {
-            Text(
-                text = "  My Learning",
+            NormalTextComposable(textValue = stringResource(R.string.my_learning),
                 fontSize = 24.sp,
-                fontFamily = sedanRegular,
-                color = Color.White
+                color = Color.White,
+                textAlign = TextAlign.Left,
+                startPadding = 10.dp
             )
             Spacing()
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
@@ -109,8 +112,12 @@ fun StudyScreen(){
         }
         Spacing()
         HorizontalDivider()
-        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-            Spacing()
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacing(size = 20.dp)
             Box {
                 Text(text = buildAnnotatedString {
                     append("Coding krna hua ")
@@ -141,10 +148,12 @@ fun StudyScreen(){
                 Image(
                     painter = painterResource(id = R.drawable.group_6),
                     contentDescription = "",
-                    modifier = Modifier.size(width = 400.dp, height = 261.dp)
+                    modifier = Modifier
+                        .height(300.dp)
+                        .fillMaxWidth()
                 )
             }
-            Spacing()
+            Spacing(size = 10.dp)
             Text(text = "Made with ❤ by RASS", color = Color(0xFFCACDD8), fontFamily = sedanRegular)
         }
     }

@@ -5,9 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.coaching.srit.data.uievent.login.LoginUiEvent
 import com.coaching.srit.data.uievent.rules.Validator
-import com.coaching.srit.ui.navigation.Router
-import com.coaching.srit.ui.navigation.Screen
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginViewModel: ViewModel(){
 
@@ -35,17 +32,17 @@ class LoginViewModel: ViewModel(){
                 )
                 printState()
             }
-            LoginUiEvent.ValidateLoginButtonClicked -> {
-                login()
-            }
+//            LoginUiEvent.ValidateLoginButtonClicked -> {
+////                login()
+//            }
         }
         validateDataWithRules()
     }
-
-    private fun login() {
-        Log.d(TAG, "Inside login validation")
-        printState()
-        loginUserInFirebase(email = loginUiState.value.email, password = loginUiState.value.password)
+    fun getEmail(): String {
+        return loginUiState.value.email
+    }
+    fun getPassword(): String {
+        return loginUiState.value.password
     }
 
     private fun validateDataWithRules() {
@@ -70,24 +67,31 @@ class LoginViewModel: ViewModel(){
         Log.d(TAG, "Inside printState")
         Log.d(TAG, loginUiState.value.toString())
     }
-    private fun loginUserInFirebase(email: String, password: String){
-        loginInProgress.value = true
-        FirebaseAuth
-            .getInstance()
-            .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                loginInProgress.value = false
-                if (task.isSuccessful) {
-                    Log.d(TAG, "Login successful!")
-                    Router.navigateTo(Screen.HomeScreen)
-                } else {
-                    Log.w(TAG, "Login failed.", task.exception)
-                }
-            }
-            .addOnFailureListener{
-                loginInProgress.value = false
-                Log.w(TAG, "Login failed -> ${it.message}")
-                invalidUser.value = true
-            }
-    }
+
+//    fun login(auth: FirebaseAuth, onSignedIn: (FirebaseUser) -> Unit) {
+//        Log.d(TAG, "Inside login validation")
+//        printState()
+//        loginUserInFirebase(auth = auth, email = loginUiState.value.email, password = loginUiState.value.password){
+//            onSignedIn(it)
+//        }
+//    }
+//    private fun loginUserInFirebase(auth: FirebaseAuth, email: String, password: String, onSignedIn: (FirebaseUser) -> Unit){
+//        loginInProgress.value = true
+//        auth
+//            .signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener { task ->
+//                loginInProgress.value = false
+//                if (task.isSuccessful) {
+//                    Log.d(TAG, "Login successful!")
+//                    auth.currentUser?.let { onSignedIn(it) }
+//                } else {
+//                    Log.w(TAG, "Login failed.", task.exception)
+//                }
+//            }
+//            .addOnFailureListener{
+//                loginInProgress.value = false
+//                Log.w(TAG, "Login failed -> ${it.message}")
+//                invalidUser.value = true
+//            }
+//    }
 }

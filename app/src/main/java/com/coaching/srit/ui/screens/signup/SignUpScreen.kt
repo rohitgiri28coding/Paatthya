@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,21 +19,25 @@ import com.coaching.srit.R
 import com.coaching.srit.data.uievent.signup.SignUpUiEvent
 import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ButtonComponent
-import com.coaching.srit.ui.components.ClickableImageComposable
 import com.coaching.srit.ui.components.ClickableLoginTextComponent
+import com.coaching.srit.ui.components.GoogleSignInButton
 import com.coaching.srit.ui.components.HeadingTextComposable
 import com.coaching.srit.ui.components.MyPasswordTextField
 import com.coaching.srit.ui.components.MyTextField
 import com.coaching.srit.ui.components.NormalTextComposable
 import com.coaching.srit.ui.components.Spacing
-import com.coaching.srit.ui.components.TextDivider
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.navigation.SystemBackButtonHandler
 import com.coaching.srit.ui.theme.Primary
 
 @Composable
-fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()){
+fun SignUpScreen(
+    trySigningUp: (String, String) -> Unit,
+    trySigningUpUsingGoogle: () -> Unit,
+    signUpViewModel: SignUpViewModel = viewModel(),
+//    showLoader: Boolean
+){
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage()
         Column(modifier = Modifier.padding(start = 20.dp, top = 80.dp, end = 20.dp)) {
@@ -49,7 +50,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()){
                 fontSize = 16.sp,
                 textAlign = TextAlign.Start
             )
-            Spacing(size = 50.dp)
+            Spacing(size = 40.dp)
             MyTextField(
                 labelValue = stringResource(R.string.email),
                 painterResource = painterResource(id = R.drawable.email),
@@ -67,30 +68,9 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = viewModel()){
             )
             Spacing()
             ButtonComponent(value = stringResource(R.string.sign_up), isEnabled = signUpViewModel.allValidationPassed.value) {
-                signUpViewModel.onEvent(SignUpUiEvent.RegisterButtonClicked)
+                trySigningUp(signUpViewModel.getEmail(), signUpViewModel.getPassword())
             }
-            Spacing(size = 60.dp)
-            TextDivider(text = "or connect using")
-            Spacing(size = 60.dp)
-            Button(onClick = { /*TODO*/ }, modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 60.dp)) {
-                ClickableImageComposable(
-                    img = R.drawable.google_logo,
-                    contentDesc = "google",
-                    padding = 8.dp
-                )
-                {
-
-                }
-                Column {
-                    Spacing(size = 10.dp)
-                    NormalTextComposable(
-                        textValue = stringResource(R.string.sign_up_with_google),
-                        fontSize = 20.sp
-                    )
-                }
-            }
+            GoogleSignInButton (trySigningUpUsingGoogle)
             Spacer(modifier = Modifier.weight(1f))
             ClickableLoginTextComponent(
                 txt = stringResource(R.string.already_have_an_account),

@@ -857,3 +857,35 @@ fun BatchComponent(title: String, img: Int, detail: String, onClick: () -> Unit)
         Spacing(size = 10.dp)
     }
 }
+@Composable
+fun GoogleSignInButton(openGoogleSignIn: () -> Unit) {
+    Spacing()
+    TextDivider(text = stringResource(R.string.or_connect_using))
+    Spacing()
+    Button(
+        onClick = {
+            openGoogleSignIn.invoke()
+        },
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = 55.dp)
+            .border(2.dp, Color(0xFF343D28), RoundedCornerShape(24.dp))
+    ) {
+        ClickableImageComposable(
+            img = R.drawable.google_logo,
+            contentDesc = stringResource(R.string.google),
+            padding = 8.dp
+        )
+        {
+            openGoogleSignIn.invoke()
+        }
+        Column {
+            Spacing(size = 10.dp)
+            NormalTextComposable(
+                textValue = stringResource(R.string.sign_in_with_google),
+                fontSize = 20.sp
+            )
+        }
+    }
+}
