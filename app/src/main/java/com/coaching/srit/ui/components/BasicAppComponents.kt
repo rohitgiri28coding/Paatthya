@@ -532,9 +532,9 @@ fun FAQComposable(
     }
 }
 @Composable
-fun IconAndText(text: String, imageVector: ImageVector, contentDesc: String) {
+fun IconAndText(text: String, imageVector: ImageVector, contentDesc: String, onClick: () -> Unit) {
     Row(
-        modifier = Modifier.padding(start = 25.dp, top = 20.dp),
+        modifier = Modifier.padding(start = 25.dp, top = 20.dp).clickable { onClick.invoke() },
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Icon(
@@ -620,7 +620,7 @@ fun TopAppBarWithBackButton(text: String, topAppBarColor: Color = Color.Transpar
     )
 }
 @Composable
-fun GenerateFeedComponent(name: String, timeStamp: String, messages: List<String>, image: Int) {
+fun GenerateFeedComponent(name: String, timeStamp: String, messages: String, image: Int) {
     Column {
         Row(modifier = Modifier.padding(start = 8.dp)) {
             Image(
@@ -638,9 +638,8 @@ fun GenerateFeedComponent(name: String, timeStamp: String, messages: List<String
                 Spacing(size = 2.dp)
                 NameAndTimeStamp(name = name, timeStamp = timeStamp)
                 Spacing(size = 4.dp)
-                messages.forEach {
-                    TextInRoundedBox(message = it)
-                }
+                TextInRoundedBox(message = messages)
+
             }
         }
     }

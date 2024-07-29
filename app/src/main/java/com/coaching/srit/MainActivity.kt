@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun App(
+    fun App(
         auth: FirebaseAuth,
         context: Context,
         scope: CoroutineScope,
@@ -68,9 +68,10 @@ class MainActivity : ComponentActivity() {
 
         Router.chooseAuthOrHome(user)
 
-//        var showLoader by remember {
-//            mutableStateOf(false)
-//        }
+        var showLoader by remember {
+            mutableStateOf(false)
+        }
+
         Surface(modifier = Modifier.fillMaxSize()) {
 
             Crossfade(targetState = Router.currentScreen, label = "") { currentState ->
@@ -82,23 +83,27 @@ class MainActivity : ComponentActivity() {
                     Screen.SignUpScreen -> {
                         SignUpScreen(
                             trySigningUp = { email, password ->
+                                showLoader = true
                                 scope.launch {
                                     user =
                                         firebaseBasicAuth.signUp(email = email, password = password)
                                 }
                             },
                             trySigningUpUsingGoogle = {
+                                showLoader = true
                                 scope.launch {
                                     user = googleAuth.authenticateWithGoogle()
                                     Router.chooseAuthOrHome(user)
                                 }
-                            }
+                            },
+                            showLoader = showLoader
                         )
                     }
 
                     Screen.LoginScreen -> {
                         LoginScreen(
                             trySigningIn = { email, password ->
+                                showLoader = true
                                 scope.launch {
                                     user =
                                         firebaseBasicAuth.signIn(email = email, password = password)
@@ -106,10 +111,12 @@ class MainActivity : ComponentActivity() {
                             },
                             trySigningInUsingGoogle = {
                                 scope.launch {
+                                    showLoader = true
                                     user = googleAuth.authenticateWithGoogle()
                                     Router.chooseAuthOrHome(user)
                                 }
-                            }
+                            },
+                            showLoader = showLoader
                         )
                     }
 
@@ -126,14 +133,17 @@ class MainActivity : ComponentActivity() {
                     }
 
                     Screen.HomeScreen -> {
-                        Home(
-                            onSignOut = {
-                                scope.launch {
-                                    user = null
-                                    googleAuth.signOutUser()
+                        if (user != null) {
+                            Home(
+                                user = user!!,
+                                onSignOut = {
+                                    scope.launch {
+                                        user = null
+                                        googleAuth.signOutUser()
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
 
                     Screen.ContactUsScreen -> {

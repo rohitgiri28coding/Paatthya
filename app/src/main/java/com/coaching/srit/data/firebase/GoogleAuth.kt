@@ -7,7 +7,10 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.ClearCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import com.coaching.srit.data.core.Constants
+import com.coaching.srit.ui.navigation.Router
+import com.coaching.srit.ui.navigation.Screen
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -47,7 +50,14 @@ class GoogleAuth(private val context: Context, private val auth: FirebaseAuth) {
             val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
             val authResult = auth.signInWithCredential(firebaseCredential).await()
             return authResult.user
-        } catch (e: Exception) {
+        }
+
+        catch (e: NoCredentialException){
+            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+            Router.navigateTo(Screen.LoginScreen)
+        }
+        catch (e: Exception) {
             Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }

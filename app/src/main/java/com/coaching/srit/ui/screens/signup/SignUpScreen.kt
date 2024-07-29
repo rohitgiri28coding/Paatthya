@@ -36,8 +36,9 @@ fun SignUpScreen(
     trySigningUp: (String, String) -> Unit,
     trySigningUpUsingGoogle: () -> Unit,
     signUpViewModel: SignUpViewModel = viewModel(),
-//    showLoader: Boolean
+    showLoader: Boolean
 ){
+    signUpViewModel.signUpInProgress.value = showLoader
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage()
         Column(modifier = Modifier.padding(start = 20.dp, top = 80.dp, end = 20.dp)) {

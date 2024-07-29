@@ -37,9 +37,10 @@ import com.coaching.srit.ui.theme.Primary
 fun LoginScreen(
     trySigningIn: (String, String) -> Unit,
     trySigningInUsingGoogle: () -> Unit,
-    loginViewModel: LoginViewModel = viewModel()
-//    showLoader: Boolean
+    loginViewModel: LoginViewModel = viewModel(),
+    showLoader: Boolean
 ) {
+    loginViewModel.loginInProgress.value = showLoader
     Surface {
         BackgroundImage()
         Column(

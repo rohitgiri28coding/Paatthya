@@ -9,11 +9,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import com.coaching.srit.ui.components.BackgroundImage
+import com.coaching.srit.ui.components.NormalTextComposable
+import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.components.TopAppBarWithBackButton
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.navigation.SystemBackButtonHandler
+import com.coaching.srit.ui.screens.YoutubePlayer
 
 @Composable
 fun RecentlyWatchedScreen() {
@@ -26,6 +30,14 @@ fun RecentlyWatchedScreen() {
             Column(modifier = Modifier
                 .padding(it)
                 .verticalScroll(rememberScrollState())) {
+                Spacing()
+                NormalTextComposable(textValue = "SRIT Introduction Video")
+                Spacing()
+                YoutubePlayer(
+                    youtubeVideoId = "jHtJin50tJg",
+                    lifecycleOwner = LocalLifecycleOwner.current
+                )
+
             }
         }
     }

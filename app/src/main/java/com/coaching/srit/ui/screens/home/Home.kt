@@ -1,5 +1,6 @@
 package com.coaching.srit.ui.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +31,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,18 +60,58 @@ import com.coaching.srit.ui.screens.home.batches.BatchesScreen
 import com.coaching.srit.ui.screens.home.notice.NoticeScreen
 import com.coaching.srit.ui.screens.home.study.StudyScreen
 import com.coaching.srit.ui.theme.sedanRegular
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
+data class User(
+    val uid: String,
+    val name: String,
+    val isAdmin: Boolean = false,
+    val email: String
+)
 @Composable
 fun Home(
+    user: FirebaseUser,
     homeScreenViewModel: HomeScreenViewModel = viewModel(),
     onSignOut: () -> Job
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val firestore = FirebaseFirestore.getInstance()
+    val userProfile = remember {
+        mutableStateOf<User?>(null)
+    }
+    LaunchedEffect(user.uid) {
+        val userDocRef = firestore.collection("users").document(user.uid).get().await()
 
+        if (!userDocRef.exists())
+        {
+            Log.d("UserDocRef", "User profile document does not exist")
+            val name = "Random User"
+            val isAdmin = false
+
+            firestore.collection("users")
+                .document(user.uid)
+                .set(hashMapOf(
+                    "uid" to user.uid,
+                    "name" to name,
+                    "isAdmin" to isAdmin,
+                    "email" to user.email
+                ))
+                .await()
+            userProfile.value = User(user.uid, name, isAdmin, user.email ?: "")
+        }
+        else
+        {
+            val name = userDocRef.getString("name") ?: "Random One"
+            val isAdmin = userDocRef.getBoolean("isAdmin") ?: false
+            userProfile.value = User(user.uid, name, isAdmin, user.email ?: "")
+        }
+    }
     Box {
         BackgroundImage()
         ModalNavigationDrawer(
@@ -88,7 +132,7 @@ fun Home(
                 containerColor = Color.Transparent
             ) { contentPadding ->
                 Box(modifier = Modifier.padding(contentPadding)) {
-                    NavigateToScreen(currentScreen)
+                    NavigateToScreen(currentScreen, userProfile)
                 }
             }
         }
@@ -265,7 +309,7 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
 }
 
 @Composable
-private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>) {
+private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>, userProfile: MutableState<User?>) {
     when (currentScreen.value) {
         HomeScreen.StudyScreen -> {
             StudyScreen()
@@ -277,7 +321,13 @@ private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>) {
             BatchesScreen()
         }
         HomeScreen.NoticeScreen -> {
-            NoticeScreen()
+            if (userProfile.value != null) {
+                NoticeScreen(
+                    userProfile.value!!.isAdmin,
+                    userProfile.value!!.uid,
+                    userProfile.value!!.name
+                )
+            }
         }
     }
 }
