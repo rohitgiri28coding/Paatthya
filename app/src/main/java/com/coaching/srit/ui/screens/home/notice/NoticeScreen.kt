@@ -20,12 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,25 +30,40 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coaching.srit.R
+import com.coaching.srit.ui.viewmodel.home.Notice
 import com.coaching.srit.ui.components.GenerateFeedComponent
 import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.components.TextDivider
+import com.coaching.srit.ui.viewmodel.NoticeViewModel
+
+data class FormattedMessage(val notice: Notice, val formattedDate: String, val formattedTime: String)
 
 @Composable
-fun NoticeScreen(isAdmin: Boolean, uid: String, name: String,noticeViewModel: NoticeViewModel = viewModel()) {
+fun NoticeScreen(isAdmin: Boolean, uid: String, name: String, noticeViewModel: NoticeViewModel = viewModel()) {
     val listState = rememberLazyListState()
-    var textValue by remember {
-        mutableStateOf("")
-    }
-    var dateValue = ""
+
     val notices = noticeViewModel.notices.collectAsState(initial = emptyList())
 
-    LaunchedEffect(Unit) {
-        noticeViewModel.fetchNotices()
-    }
+    val formattedNotice = notices.value
+        .groupBy {
+            noticeViewModel.formatDatestamp(it.dateTimeStamp!!)
+        }
+        .flatMap { (date, messages) ->
+            messages.mapIndexed { index, message ->
+                val showDate = index == messages.lastIndex
+                FormattedMessage(
+                    notice = Notice(message.name, message.uid, message.message, message.dateTimeStamp),
+                    formattedTime = noticeViewModel.formatTimestamp(message.dateTimeStamp!!),
+                    formattedDate = if (showDate) date else ""
+                )
+            }
+        }
+    noticeViewModel.fetchNotices()
+
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (messages, chatBox) = createRefs()
         LazyColumn(state = listState,
+            reverseLayout = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(messages) {
@@ -64,25 +74,24 @@ fun NoticeScreen(isAdmin: Boolean, uid: String, name: String,noticeViewModel: No
                     height = Dimension.fillToConstraints
                 }
         ) {
-            items(notices.value, key = { it.dateTimeStamp.hashCode() }) {
+            items(formattedNotice, key = { it.notice.dateTimeStamp.hashCode() }) {
                 Spacing(size = 10.dp)
 
-                if (it.dateTimeStamp != null && it.message != null) {
-                    val date = noticeViewModel.formatDatestamp(it.dateTimeStamp)
-                    if (dateValue != date) {
-                        TextDivider(text = date)
-                        Spacing(size = 20.dp)
-                        dateValue = date
-                    }
-                    Log.d("if TAG", "NoticeScreen: $it")
+                if (it.notice.dateTimeStamp != null && it.notice.message != null) {
+
                     GenerateFeedComponent(
-                        name = it.name ?: "User",
-                        timeStamp = noticeViewModel.formatTimestamp(it.dateTimeStamp),
-                        messages = it.message,
+                        name = it.notice.name ?: "User",
+                        timeStamp = it.formattedTime,
+                        messages = it.notice.message,
                         image = R.drawable.profile_img
                     )
                     Spacing(size = 10.dp)
+                    if (it.formattedDate != "") {
+                        TextDivider(text = it.formattedDate)
+                        Spacing(size = 20.dp)
+                    }
 
+                    Log.d("TAG", "NoticeScreen: $it")
                 }
             }
         }
@@ -94,12 +103,13 @@ fun NoticeScreen(isAdmin: Boolean, uid: String, name: String,noticeViewModel: No
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
+
         )
         {
             if (isAdmin) {
                 OutlinedTextField(
-                    value = textValue,
-                    onValueChange = { textValue = it },
+                    value = noticeViewModel.textValue.value,
+                    onValueChange = { noticeViewModel.textValue.value = it },
                     placeholder = {
                         Text(text = "Enter message", color = Color.White)
                     },
@@ -128,12 +138,12 @@ fun NoticeScreen(isAdmin: Boolean, uid: String, name: String,noticeViewModel: No
                     Button(
                         onClick = {
                             noticeViewModel.generateNewNotice(
-                                message = textValue,
+                                message = noticeViewModel.textValue.value,
                                 name = name,
                                 uid = uid
                             )
-                            textValue = ""
-                        }, enabled = textValue.isNotEmpty(),
+                            noticeViewModel.textValue.value = ""
+                        }, enabled = noticeViewModel.enableSendButton(),
                         colors = ButtonDefaults.buttonColors(
                             Color.Transparent
                         )

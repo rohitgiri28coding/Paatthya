@@ -1,6 +1,5 @@
 package com.coaching.srit.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,8 +32,6 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ClickableTextWithArrowSign
 import com.coaching.srit.ui.components.HeadingTextComposable
@@ -53,71 +50,31 @@ import com.coaching.srit.ui.components.NormalTextComposable
 import com.coaching.srit.ui.components.Spacing
 import com.coaching.srit.ui.navigation.HomeScreen
 import com.coaching.srit.ui.navigation.HomeScreenRouter
-import com.coaching.srit.ui.navigation.HomeScreenRouter.currentScreen
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.screens.home.about.AboutScreen
 import com.coaching.srit.ui.screens.home.batches.BatchesScreen
 import com.coaching.srit.ui.screens.home.notice.NoticeScreen
 import com.coaching.srit.ui.screens.home.study.StudyScreen
 import com.coaching.srit.ui.theme.sedanRegular
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
+import com.coaching.srit.ui.viewmodel.HomeScreenViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
-data class User(
-    val uid: String,
-    val name: String,
-    val isAdmin: Boolean = false,
-    val email: String
-)
+
 @Composable
-fun Home(
-    user: FirebaseUser,
-    homeScreenViewModel: HomeScreenViewModel = viewModel(),
-    onSignOut: () -> Job
-){
+fun Home(homeScreenViewModel: HomeScreenViewModel = hiltViewModel()){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val firestore = FirebaseFirestore.getInstance()
-    val userProfile = remember {
-        mutableStateOf<User?>(null)
-    }
-    LaunchedEffect(user.uid) {
-        val userDocRef = firestore.collection("users").document(user.uid).get().await()
 
-        if (!userDocRef.exists())
-        {
-            Log.d("UserDocRef", "User profile document does not exist")
-            val name = "Random User"
-            val isAdmin = false
-
-            firestore.collection("users")
-                .document(user.uid)
-                .set(hashMapOf(
-                    "uid" to user.uid,
-                    "name" to name,
-                    "isAdmin" to isAdmin,
-                    "email" to user.email
-                ))
-                .await()
-            userProfile.value = User(user.uid, name, isAdmin, user.email ?: "")
-        }
-        else
-        {
-            val name = userDocRef.getString("name") ?: "Random One"
-            val isAdmin = userDocRef.getBoolean("isAdmin") ?: false
-            userProfile.value = User(user.uid, name, isAdmin, user.email ?: "")
-        }
+    LaunchedEffect(homeScreenViewModel.user.uid) {
+        homeScreenViewModel.fetchUserProfile()
     }
     Box {
         BackgroundImage()
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
-                HomeNavigationDrawer(homeScreenViewModel, scope, drawerState, onSignOut)
+                HomeNavigationDrawer(homeScreenViewModel, scope, drawerState)
             },
         ) {
             Scaffold(
@@ -132,7 +89,7 @@ fun Home(
                 containerColor = Color.Transparent
             ) { contentPadding ->
                 Box(modifier = Modifier.padding(contentPadding)) {
-                    NavigateToScreen(currentScreen, userProfile)
+                    NavigateToScreen(currentScreen = HomeScreenRouter.currentScreen, homeScreenViewModel = homeScreenViewModel)
                 }
             }
         }
@@ -145,7 +102,6 @@ private fun HomeNavigationDrawer(
     homeScreenViewModel: HomeScreenViewModel,
     scope: CoroutineScope,
     drawerState: DrawerState,
-    onSignOut: () -> Job
 ) {
     ModalDrawerSheet(
         drawerContainerColor = Color(0xFF16171A),
@@ -196,15 +152,17 @@ private fun HomeNavigationDrawer(
         }
         Spacing(size = 20.dp)
         HorizontalDivider()
-        LogoutComponent(onSignOut)
+        LogoutComponent{
+            homeScreenViewModel.signOut()
+        }
     }
 }
 
 @Composable
-private fun LogoutComponent(onSignOut: () -> Job) {
+private fun LogoutComponent(onSignOut: () -> Unit) {
     Row(modifier = Modifier
         .clickable {
-          onSignOut.invoke()
+            onSignOut.invoke()
         }
         .fillMaxWidth()
         .padding(10.dp),
@@ -274,6 +232,7 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
                 onClick = {
                     homeScreenViewModel.updateBottomBarIndex(index)
                     HomeScreenRouter.changeCurrentScreen(item.screenRoute)
+//                    Router.navigateScreenTo(item.screenRoute)
                     if (item.badgeCount != null) {
                         homeScreenViewModel.updateBottomNavBadgeCount(index, 0)
                     } else if (item.hasNews) {
@@ -309,7 +268,7 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
 }
 
 @Composable
-private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>, userProfile: MutableState<User?>) {
+private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>, homeScreenViewModel: HomeScreenViewModel) {
     when (currentScreen.value) {
         HomeScreen.StudyScreen -> {
             StudyScreen()
@@ -321,11 +280,11 @@ private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>, userProfil
             BatchesScreen()
         }
         HomeScreen.NoticeScreen -> {
-            if (userProfile.value != null) {
+            if (homeScreenViewModel.userProfile.value != null) {
                 NoticeScreen(
-                    userProfile.value!!.isAdmin,
-                    userProfile.value!!.uid,
-                    userProfile.value!!.name
+                    homeScreenViewModel.userProfile.value!!.isAdmin,
+                    homeScreenViewModel.userProfile.value!!.uid,
+                    homeScreenViewModel.userProfile.value!!.name
                 )
             }
         }

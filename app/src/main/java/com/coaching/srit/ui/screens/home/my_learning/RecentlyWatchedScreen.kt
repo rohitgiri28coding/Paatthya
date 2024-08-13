@@ -17,7 +17,7 @@ import com.coaching.srit.ui.components.TopAppBarWithBackButton
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.navigation.SystemBackButtonHandler
-import com.coaching.srit.ui.screens.YoutubePlayer
+import com.coaching.srit.ui.screens.home.YoutubePlayer
 
 @Composable
 fun RecentlyWatchedScreen() {

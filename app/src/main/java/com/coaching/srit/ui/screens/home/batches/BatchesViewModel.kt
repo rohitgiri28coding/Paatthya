@@ -2,7 +2,7 @@ package com.coaching.srit.ui.screens.home.batches
 
 import androidx.lifecycle.ViewModel
 import com.coaching.srit.R
-import com.coaching.srit.data.uievent.home.Batches
+import com.coaching.srit.ui.viewmodel.home.Batches
 
 class BatchesViewModel: ViewModel() {
     val images  = listOf(

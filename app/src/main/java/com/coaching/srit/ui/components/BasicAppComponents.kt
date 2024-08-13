@@ -599,6 +599,7 @@ fun ClickableImageComposable(img: Int, contentDesc: String, padding: Dp=0.dp, on
             .padding(padding)
     )
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarWithBackButton(text: String, topAppBarColor: Color = Color.Transparent) {
