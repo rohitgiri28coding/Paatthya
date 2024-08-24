@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -42,6 +43,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
@@ -886,6 +888,56 @@ fun GoogleSignInButton(openGoogleSignIn: () -> Unit) {
                 textValue = stringResource(R.string.sign_in_with_google),
                 fontSize = 20.sp
             )
+        }
+    }
+}
+@Composable
+fun MessageBox(onTextSelected: (String) -> Unit, onSend: () -> Unit) {
+    var message by remember { mutableStateOf("") }
+    Row {
+        OutlinedTextField(
+            value = message,
+            onValueChange = {
+                message = it
+                onTextSelected(it)
+            },
+            placeholder = {
+                Text(text = "Enter message", color = Color.White)
+            },
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = Color(0xFF13751D),
+                focusedBorderColor = Color(0xFF1DE22D),
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
+            ),
+            modifier = Modifier.Companion
+                .weight(1f)
+                .padding(6.dp)
+                .height(56.dp),
+        )
+        Box(
+            modifier = Modifier
+                .heightIn(32.dp)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        listOf(Color(0xFF1DE22D), Color(0xFF13751D))
+                    ),
+                    shape = RoundedCornerShape(50.dp)
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            Button(
+                onClick = {
+                    onSend.invoke()
+                    message = ""
+                },
+                enabled = message.trim().isNotEmpty(),
+                colors = ButtonDefaults.buttonColors(
+                    Color.Transparent
+                )
+            ) {
+                Text(text = "Send", color = Color.White)
+            }
         }
     }
 }

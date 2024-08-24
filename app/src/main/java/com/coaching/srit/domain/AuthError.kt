@@ -22,6 +22,10 @@ sealed interface AuthError: Error{
         EMAIL_EMPTY,
         EMAIL_INVALID,
     }
+    enum class NameValidationError: AuthError {
+        NAME_EMPTY,
+        NAME_INVALID,
+    }
     enum class PasswordValidationError: AuthError{
         TOO_SHORT,
         NO_SPECIAL_CHARACTER,

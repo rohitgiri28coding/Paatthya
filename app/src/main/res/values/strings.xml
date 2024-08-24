@@ -36,9 +36,16 @@
     <string name="invalid_credentials">Please enter valid credentials.</string>
     <string name="no_digit">Password must include at least one DIGIT.</string>
     <string name="no_lowercase">Password must include at least one LOWERCASE character.</string>
-    <string name="no_uppercase">Password must include at least one UPPERCASE character.\n</string>
+    <string name="no_uppercase">Password must include at least one UPPERCASE character.</string>
     <string name="no_special_character">Password must include at least one SPECIAL CHARACTER.</string>
     <string name="too_short">Password must have a minimum length of 8 characters.</string>
     <string name="unknown_error">Something went wrong.</string>
     <string name="server_error">Something went wrong on the server side while processing the request.</string>
+    <string name="name">Name</string>
+    <string name="disk_full">Storage full.</string>
+    <string name="request_timeout">Request timeout.</string>
+    <string name="too_many_requests">Too many request sent. Please try again later.</string>
+    <string name="name_cannot_be_empty">Name cannot be empty.</string>
+    <string name="invalid_name">Enter a valid name.</string>
+    <string name="serialization_error">Unable to serialize the output.</string>
 </resources>

@@ -29,13 +29,9 @@ fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
             Screen.WelcomeScreen -> WelcomeScreen()
             Screen.ForgotPasswordResetLinkSentScreen -> ForgotPasswordScreenResetLinkSent()
             Screen.ForgotPasswordScreen -> ForgotPasswordScreen()
-
             Screen.LoginScreen -> LoginScreen()
-
             Screen.SignUpScreen -> SignUpScreen()
-
             Screen.HomeScreen -> Home()
-
             Screen.ContactUsScreen -> ContactUsScreen()
             Screen.GalleryScreen -> GalleryScreen()
             Screen.MyBatchScreen -> MyBatchesScreen()

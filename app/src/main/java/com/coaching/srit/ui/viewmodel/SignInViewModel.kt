@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coaching.srit.domain.AuthError
+import com.coaching.srit.domain.Error
 import com.coaching.srit.domain.Result
 import com.coaching.srit.domain.UserErrorEvent
 import com.coaching.srit.domain.model.User
@@ -20,21 +21,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCase, private val googleOneTapSignInUseCase: GoogleOneTapSignInUseCase): ViewModel(){
-
-//    private var TAG = SignInViewModel::class.simpleName
-//    var allValidationPassed = mutableStateOf(false)
-//    var invalidUser = mutableStateOf(false)
+class SignInViewModel @Inject constructor(
+    private val signInUseCase: SignInUseCase,
+    private val googleOneTapSignInUseCase: GoogleOneTapSignInUseCase
+): ViewModel(){
 
     private var signInUiState  = mutableStateOf(AuthUiState())
 
     var signInInProgress = mutableStateOf(false)
+        private set
 
     private val signInErrorEventChannel = Channel<UserErrorEvent>()
     val signInErrorEvents = signInErrorEventChannel.receiveAsFlow()
 
     init {
-        signInUiState.value = AuthUiState(email = "", password = "", emailError = false, passwordError = false)
+        signInUiState.value = AuthUiState(email = "", password = "")
     }
 
     fun onEvent(event: AuthUiEvent){
@@ -43,15 +44,14 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                 signInUiState.value = signInUiState.value.copy(
                     email = event.email
                 )
-//                printState()
             }
             is AuthUiEvent.PasswordChange -> {
                 signInUiState.value = signInUiState.value.copy(
                     password = event.password
                 )
-//                printState()
             }
-
+            is AuthUiEvent.NameChange -> {
+            }
             AuthUiEvent.AuthButtonClicked -> {
                 viewModelScope.launch {
                     signInInProgress.value = true
@@ -70,7 +70,6 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                     }
                 }
             }
-
             AuthUiEvent.GoogleAuthButtonClicked -> {
                 viewModelScope.launch {
                     signInInProgress.value = true
@@ -87,9 +86,8 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                 }
             }
         }
-//        validateDataWithRules()
     }
-    private suspend fun manageSignInResult(signUpResult: Result<User, AuthError>) {
+    private suspend fun manageSignInResult(signUpResult: Result<User, Error>) {
         when (signUpResult) {
             is Result.Error -> {
                 val error = signUpResult.error.asUiText()
@@ -102,34 +100,4 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
             }
         }
     }
-
-//    fun getEmail(): String {
-//        return signInUiState.value.email
-//    }
-//    fun getPassword(): String {
-//        return signInUiState.value.password
-//    }
-//
-//    private fun validateDataWithRules() {
-//        val emailResult = Validator.validateEmail(
-//            signInUiState.value.email
-//        )
-//        val passwordResult = Validator.validatePassword(
-//            signInUiState.value.password
-//        )
-//        Log.d(TAG, "inside validate with rules")
-//        Log.d(TAG, "email: $emailResult")
-//        Log.d(TAG, "password: $passwordResult")
-//
-//        signInUiState.value = signInUiState.value.copy(
-//            emailError = emailResult.status,
-//            passwordError = passwordResult.status
-//        )
-//        allValidationPassed.value = emailResult.status && passwordResult.status
-//    }
-//
-//    private fun printState(){
-//        Log.d(TAG, "Inside printState")
-//        Log.d(TAG, signInUiState.value.toString())
-//    }
 }

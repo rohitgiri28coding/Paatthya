@@ -61,6 +61,14 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = hiltViewModel()){
             )
             Spacing(size = 40.dp)
             MyTextField(
+                labelValue = stringResource(R.string.name),
+                painterResource = painterResource(id = R.drawable.name_icon),
+                onTextSelected = {
+                    signUpViewModel.onEvent(AuthUiEvent.NameChange(it))
+                }
+            )
+            Spacing(size = 15.dp)
+            MyTextField(
                 labelValue = stringResource(R.string.email),
                 painterResource = painterResource(id = R.drawable.email),
                 onTextSelected = {

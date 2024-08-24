@@ -90,4 +90,13 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun forgotPassword(email: String): Result<Unit, AuthError> {
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            return Result.Success(Unit)
+        }catch (e: Exception){
+            return Result.Error(AuthError.SignInError.UNKNOWN_ERROR)
+        }
+    }
+
 }

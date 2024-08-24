@@ -15,46 +15,28 @@ import androidx.compose.material.icons.outlined.BrowseGallery
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Difference
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coaching.srit.data.firebase.UserRepository
 import com.coaching.srit.domain.Result
-import com.coaching.srit.domain.model.User
 import com.coaching.srit.domain.usecase.SignOutUseCase
 import com.coaching.srit.ui.navigation.HomeScreen
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
 import com.coaching.srit.ui.viewmodel.home.BottomNavigationItem
 import com.coaching.srit.ui.viewmodel.home.NavigationItem
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(private val signOutUseCase: SignOutUseCase, auth: FirebaseAuth): ViewModel() {
-
-    private val _userProfile = mutableStateOf<User?>(null)
-    val userProfile: State<User?> = _userProfile
-
-
-    val user = auth.currentUser!!
+class HomeScreenViewModel @Inject constructor(private val signOutUseCase: SignOutUseCase): ViewModel(){
     fun signOut() {
         viewModelScope.launch {
             when(signOutUseCase.executeSignOut()){
                 is Result.Error -> signOut()
                 is Result.Success -> Router.navigateTo(Screen.WelcomeScreen)
             }
-        }
-    }
-    fun fetchUserProfile() {
-        val firestore = UserRepository(user)
-        val name = user.displayName ?: "Random One"
-        viewModelScope.launch {
-            _userProfile.value = firestore.addUserData(name, false)
         }
     }
     val navDrawerItems = listOf(
@@ -120,6 +102,7 @@ class HomeScreenViewModel @Inject constructor(private val signOutUseCase: SignOu
 
     var navigationDrawerSelectedItemIndex = mutableIntStateOf(5)
         private set
+
     fun updateBottomBarIndex(index: Int) {
         bottomBarSelectedItemIndex.intValue = index
     }

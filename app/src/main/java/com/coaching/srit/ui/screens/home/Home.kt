@@ -30,7 +30,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -65,10 +64,6 @@ import kotlinx.coroutines.launch
 fun Home(homeScreenViewModel: HomeScreenViewModel = hiltViewModel()){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
-    LaunchedEffect(homeScreenViewModel.user.uid) {
-        homeScreenViewModel.fetchUserProfile()
-    }
     Box {
         BackgroundImage()
         ModalNavigationDrawer(
@@ -89,7 +84,7 @@ fun Home(homeScreenViewModel: HomeScreenViewModel = hiltViewModel()){
                 containerColor = Color.Transparent
             ) { contentPadding ->
                 Box(modifier = Modifier.padding(contentPadding)) {
-                    NavigateToScreen(currentScreen = HomeScreenRouter.currentScreen, homeScreenViewModel = homeScreenViewModel)
+                    NavigateToScreen(currentScreen = HomeScreenRouter.currentScreen)
                 }
             }
         }
@@ -232,7 +227,6 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
                 onClick = {
                     homeScreenViewModel.updateBottomBarIndex(index)
                     HomeScreenRouter.changeCurrentScreen(item.screenRoute)
-//                    Router.navigateScreenTo(item.screenRoute)
                     if (item.badgeCount != null) {
                         homeScreenViewModel.updateBottomNavBadgeCount(index, 0)
                     } else if (item.hasNews) {
@@ -268,25 +262,11 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
 }
 
 @Composable
-private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>, homeScreenViewModel: HomeScreenViewModel) {
+private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>) {
     when (currentScreen.value) {
-        HomeScreen.StudyScreen -> {
-            StudyScreen()
-        }
-        HomeScreen.AboutScreen -> {
-            AboutScreen()
-        }
-        HomeScreen.BatchesScreen -> {
-            BatchesScreen()
-        }
-        HomeScreen.NoticeScreen -> {
-            if (homeScreenViewModel.userProfile.value != null) {
-                NoticeScreen(
-                    homeScreenViewModel.userProfile.value!!.isAdmin,
-                    homeScreenViewModel.userProfile.value!!.uid,
-                    homeScreenViewModel.userProfile.value!!.name
-                )
-            }
-        }
+        HomeScreen.StudyScreen -> StudyScreen()
+        HomeScreen.AboutScreen -> AboutScreen()
+        HomeScreen.BatchesScreen -> BatchesScreen()
+        HomeScreen.NoticeScreen -> NoticeScreen()
     }
 }

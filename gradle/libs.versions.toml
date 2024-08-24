@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.1"
 chromecastSender = "0.28"
+datastorePreferences = "1.1.1"
 firebaseBom = "33.1.2"
 hiltAndroid = "2.51.1"
 hiltAndroidCompiler = "2.51.1"
@@ -25,6 +26,7 @@ constraintlayoutCompose = "1.0.1"
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtendedAndroid" }

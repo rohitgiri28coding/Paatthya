@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coaching.srit.domain.AuthError
+import com.coaching.srit.domain.Error
 import com.coaching.srit.domain.Result
 import com.coaching.srit.domain.UserErrorEvent
 import com.coaching.srit.domain.model.User
@@ -22,18 +23,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCase, private val googleOneTapSignInUseCase: GoogleOneTapSignInUseCase): ViewModel() {
 
-//    private var TAG = SignUpViewModel::class.simpleName
-//    var allValidationPassed = mutableStateOf(false)
-
     private var signUpUiState = mutableStateOf(AuthUiState())
 
     var signUpInProgress = mutableStateOf(false)
+        private set
 
     private val signUpErrorEventChannel = Channel<UserErrorEvent>()
     val signUpErrorEvents = signUpErrorEventChannel.receiveAsFlow()
 
     init {
-        signUpUiState.value = AuthUiState(email = "", password = "", emailError = false, passwordError = false)
+        signUpUiState.value = AuthUiState(email = "", password = "", name = "")
     }
     fun onEvent(event: AuthUiEvent){
         when(event){
@@ -41,13 +40,17 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                 signUpUiState.value = signUpUiState.value.copy(
                     email = event.email
                 )
-//                printState()
             }
             is AuthUiEvent.PasswordChange -> {
                 signUpUiState.value = signUpUiState.value.copy(
                     password = event.password
                 )
-//                printState()
+            }
+
+            is AuthUiEvent.NameChange -> {
+                signUpUiState.value = signUpUiState.value.copy(
+                    name = event.name
+                )
             }
 
             AuthUiEvent.AuthButtonClicked -> {
@@ -56,7 +59,8 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                     try {
                         val signUpResult = signUpUseCase.executeSignUp(
                             signUpUiState.value.email,
-                            signUpUiState.value.password
+                            signUpUiState.value.password,
+                            signUpUiState.value.name
                         )
                         manageSignUpResult(signUpResult)
                     }catch (e: Exception){
@@ -85,10 +89,9 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                 }
             }
         }
-//        validateDataWithRules()
     }
 
-    private suspend fun manageSignUpResult(signUpResult: Result<User, AuthError>) {
+    private suspend fun manageSignUpResult(signUpResult: Result<User, Error>) {
         when (signUpResult) {
             is Result.Error -> {
                 val error = signUpResult.error.asUiText()
@@ -101,32 +104,4 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
             }
         }
     }
-
-
-//    private fun validateDataWithRules() {
-//        val emailResult = Validator.validateEmail(
-//            signUpUiState.value.email
-//        )
-//        val passwordResult = Validator.validatePassword(
-//            signUpUiState.value.password
-//        )
-//
-//        Log.d(TAG, "inside validate with rules")
-//        Log.d(TAG, "email: $emailResult")
-//        Log.d(TAG, "password: $passwordResult")
-//
-//        signUpUiState.value = signUpUiState.value.copy(
-//            emailError = emailResult.status,
-//            passwordError = passwordResult.status,
-//        )
-//        allValidationPassed.value = emailResult.status && passwordResult.status
-//        Log.d("validation", "${allValidationPassed.value}")
-//    }
-//
-//    private fun printState(){
-//        Log.d(TAG, "Inside printState")
-//        Log.d(TAG, signUpUiState.value.toString())
-//    }
-
-
 }

@@ -1,5 +1,6 @@
 package com.coaching.srit.ui.screens.auth.forgotpassword
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -15,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.coaching.srit.R
+import com.coaching.srit.domain.UserErrorEvent
+import com.coaching.srit.ui.ObserveEvents
 import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.ButtonComponent
 import com.coaching.srit.ui.components.HeadingTextComposable
@@ -31,6 +35,14 @@ import com.coaching.srit.ui.viewmodel.ForgotPasswordViewModel
 
 @Composable
 fun ForgotPasswordScreen(forgotPasswordViewModel: ForgotPasswordViewModel = hiltViewModel()){
+    val context = LocalContext.current
+    ObserveEvents(flow = forgotPasswordViewModel.forgotPasswordErrorEvents) {
+        when(it){
+            is UserErrorEvent.Error -> {
+                Toast.makeText(context, "Forgot Password Error: ${it.error.asString(context)}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage()
         Column(modifier = Modifier.padding(start = 20.dp, top = 40.dp, end = 20.dp)) {
@@ -50,7 +62,7 @@ fun ForgotPasswordScreen(forgotPasswordViewModel: ForgotPasswordViewModel = hilt
                 forgotPasswordViewModel.onEvent(ForgotPasswordUiEvent.EmailChanged(it))
             }
             Spacing(size = 40.dp)
-            ButtonComponent(value = stringResource(R.string.send_reset_link), isEnabled = forgotPasswordViewModel.allValidationPassed.value) {
+            ButtonComponent(value = stringResource(R.string.send_reset_link)) {
                 forgotPasswordViewModel.onEvent(ForgotPasswordUiEvent.ValidateResetPasswordButton)
             }
         }
