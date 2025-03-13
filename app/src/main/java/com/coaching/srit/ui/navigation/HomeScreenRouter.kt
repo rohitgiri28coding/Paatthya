@@ -7,7 +7,7 @@ sealed class HomeScreen {
     data object StudyScreen: HomeScreen()
     data object AboutScreen: HomeScreen()
     data object NoticeScreen: HomeScreen()
-    data object BatchesScreen: HomeScreen()
+    data object ViewAllBatchesScreen: HomeScreen()
 }
 object HomeScreenRouter{
     var currentScreen: MutableState<HomeScreen> = mutableStateOf(HomeScreen.StudyScreen)

@@ -88,11 +88,11 @@ fun LoginScreen(signInViewModel: SignInViewModel = hiltViewModel()) {
                 signInViewModel.onEvent(AuthUiEvent.AuthButtonClicked)
             }
             GoogleSignInButton{
-                signInViewModel.onEvent(AuthUiEvent.GoogleAuthButtonClicked)
+                signInViewModel.onEvent(AuthUiEvent.GoogleAuthButtonClicked(context))
             }
             Spacer(modifier = Modifier.weight(1f))
             ClickableLoginTextComponent(
-                txt = stringResource(R.string.don_t_have_an_account),
+                text = stringResource(R.string.don_t_have_an_account),
                 clickableText = stringResource(R.string.register)
             ) {
                 Router.navigateTo(Screen.SignUpScreen)

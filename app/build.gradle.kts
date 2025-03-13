@@ -2,18 +2,20 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.compose.compiler)
+    id("com.google.devtools.ksp")
+
 }
 
 android {
     namespace = "com.coaching.srit"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.coaching.srit"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -25,7 +27,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -33,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -80,8 +82,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.chromecast.sender)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation( libs.androidx.datastore.preferences)
+    implementation(libs.coil.compose)
 
 }

@@ -13,42 +13,44 @@ class SignUpUseCase @Inject constructor(
     private val authValidator: AuthDataValidation,
     private val userRepository: UserRepository
 ) {
-    suspend fun executeSignUp(email: String, password: String, name: String): Result<User, Error> {
-        return when(val nameValidationResult = authValidator.validateName(name)){
+    suspend fun executeSignUp(
+        email: String,
+        password: String,
+    ): Result<User, Error> {
+        return when (val emailValidationResult = authValidator.validateName(email)) {
             is Result.Error -> {
-                Result.Error(nameValidationResult.error)
+                Result.Error(emailValidationResult.error)
             }
+
             is Result.Success -> {
-                when (val emailValidationResult = authValidator.validateName(email)) {
+                when (val passwordValidationResult =
+                    authValidator.validatePassword(password)) {
                     is Result.Error -> {
-                        Result.Error(emailValidationResult.error)
+                        Result.Error(passwordValidationResult.error)
                     }
+
                     is Result.Success -> {
-                        when (val passwordValidationResult =
-                            authValidator.validatePassword(password)) {
+                        Log.d("executing sign up", "$Result")
+                        when (val signUpResult =
+                            authRepository.signUpWithEmailAndPassword(email, password)) {
                             is Result.Error -> {
-                                Result.Error(passwordValidationResult.error)
+                                Result.Error(signUpResult.error)
                             }
+
                             is Result.Success -> {
-                                Log.d("executing sign up", "$Result")
-                                when (val signUpResult =
-                                    authRepository.signUpWithEmailAndPassword(email, password)) {
+                                val user = User(
+                                    uid = signUpResult.data.uid,
+                                    email = signUpResult.data.email
+                                )
+                                when (val userResult =
+                                    userRepository.updateUserDatabase(user)) {
                                     is Result.Error -> {
-                                        Result.Error(signUpResult.error)
+                                        authRepository.signOut()
+                                        Result.Error(userResult.error)
                                     }
 
                                     is Result.Success -> {
-                                        val user = User(uid = signUpResult.data.uid, name = name, email = signUpResult.data.email)
-                                        when (val userResult =
-                                            userRepository.updateUserDatabase(user)) {
-                                            is Result.Error -> {
-                                                authRepository.signOut()
-                                                Result.Error(userResult.error)
-                                            }
-                                            is Result.Success -> {
-                                                Result.Success(userResult.data)
-                                            }
-                                        }
+                                        Result.Success(userResult.data)
                                     }
                                 }
                             }

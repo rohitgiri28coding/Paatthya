@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.coaching.srit.R
 import com.coaching.srit.domain.UserErrorEvent
 import com.coaching.srit.ui.ObserveEvents
@@ -32,7 +32,7 @@ import com.coaching.srit.ui.viewmodel.home.Notice
 data class FormattedNotice(val notice: Notice, val formattedDate: String, val formattedTime: String)
 
 @Composable
-fun NoticeScreen(noticeViewModel: NoticeViewModel = viewModel()) {
+fun NoticeScreen(noticeViewModel: NoticeViewModel = hiltViewModel()) {
     val formattedNotice = noticeViewModel.formattedNotice.collectAsState()
 
     val context = LocalContext.current

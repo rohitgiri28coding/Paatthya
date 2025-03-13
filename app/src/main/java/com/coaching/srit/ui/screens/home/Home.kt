@@ -1,5 +1,7 @@
 package com.coaching.srit.ui.screens.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,15 +53,15 @@ import com.coaching.srit.ui.navigation.HomeScreen
 import com.coaching.srit.ui.navigation.HomeScreenRouter
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.screens.home.about.AboutScreen
-import com.coaching.srit.ui.screens.home.batches.BatchesScreen
-import com.coaching.srit.ui.screens.home.notice.NoticeScreen
+import com.coaching.srit.ui.screens.home.batches.ViewAllBatchesScreen
+import com.coaching.srit.ui.screens.home.notice.NoticeScreen1
 import com.coaching.srit.ui.screens.home.study.StudyScreen
 import com.coaching.srit.ui.theme.sedanRegular
 import com.coaching.srit.ui.viewmodel.HomeScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Home(homeScreenViewModel: HomeScreenViewModel = hiltViewModel()){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -261,12 +263,13 @@ private fun HomeBottomNavigationBar(homeScreenViewModel: HomeScreenViewModel) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun NavigateToScreen(currentScreen: MutableState<HomeScreen>) {
     when (currentScreen.value) {
         HomeScreen.StudyScreen -> StudyScreen()
         HomeScreen.AboutScreen -> AboutScreen()
-        HomeScreen.BatchesScreen -> BatchesScreen()
-        HomeScreen.NoticeScreen -> NoticeScreen()
+        HomeScreen.ViewAllBatchesScreen -> ViewAllBatchesScreen()
+        HomeScreen.NoticeScreen -> NoticeScreen1()
     }
 }

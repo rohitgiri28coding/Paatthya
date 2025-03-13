@@ -79,7 +79,7 @@ class HomeScreenViewModel @Inject constructor(private val signOutUseCase: SignOu
             selectedIcon = Icons.Filled.Difference,
             unselectedIcon = Icons.Outlined.Difference,
             hasNews = true,
-            screenRoute = HomeScreen.BatchesScreen
+            screenRoute = HomeScreen.ViewAllBatchesScreen
         ),
         BottomNavigationItem(
             title = "Notice",

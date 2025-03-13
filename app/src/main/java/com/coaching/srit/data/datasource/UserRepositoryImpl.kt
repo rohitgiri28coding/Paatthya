@@ -24,7 +24,6 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
         private val uidKey = stringPreferencesKey("user_uid")
-        private val nameKey = stringPreferencesKey("user_name")
         private val isAdminKey = booleanPreferencesKey("user_isAdmin")
         private val emailKey = stringPreferencesKey("user_email")
     }
@@ -48,9 +47,9 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
     }
     override suspend fun fetchUser(userDocRef: DocumentSnapshot, user: User): Result<User, FirestoreDbError> {
         val name = userDocRef.getString("name") ?: "Random One"
-        val isAdmin = userDocRef.getBoolean("isAdmin") ?: false
-        saveUser(User(user.uid, name, isAdmin, user.email))
-        return Result.Success(User(user.uid, name, isAdmin, user.email))
+        val isAdmin = userDocRef.getBoolean("isAdmin") == true
+        saveUser(User(user.uid, name, isAdmin, emptyList(), user.email))
+        return Result.Success(User(user.uid, name, isAdmin, emptyList(), user.email))
     }
 
     override suspend fun registerUser(user: User): Result<User, FirestoreDbError> {
@@ -60,7 +59,6 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
                 .set(
                     hashMapOf(
                         "uid" to user.uid,
-                        "name" to user.name,
                         "isAdmin" to user.isAdmin,
                         "email" to user.email
                     )
@@ -75,7 +73,6 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
     private suspend fun saveUser(user: User) {
         context.dataStore.edit { preferences ->
             preferences[uidKey] = user.uid
-            preferences[nameKey] = user.name
             preferences[isAdminKey] = user.isAdmin
             preferences[emailKey] = user.email
         }
@@ -85,10 +82,9 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
 
         return context.dataStore.data.map { preferences ->
             val uid = preferences[uidKey] ?: return@map null
-            val name = preferences[nameKey] ?: "Random One"
             val isAdmin = preferences[isAdminKey] ?: false
             val email = preferences[emailKey] ?: return@map null
-            val user = User(uid, name, isAdmin, email)
+            val user = User(uid=uid, isAdmin=isAdmin, email = email)
             Log.d("user", user.toString())
             user
         }

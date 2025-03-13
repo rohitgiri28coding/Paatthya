@@ -36,7 +36,6 @@ import com.coaching.srit.ui.theme.Primary
 import com.coaching.srit.ui.viewmodel.AuthUiEvent
 import com.coaching.srit.ui.viewmodel.SignUpViewModel
 
-
 @Composable
 fun SignUpScreen(signUpViewModel: SignUpViewModel = hiltViewModel()){
     val context = LocalContext.current
@@ -60,14 +59,14 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = hiltViewModel()){
                 textAlign = TextAlign.Start
             )
             Spacing(size = 40.dp)
-            MyTextField(
-                labelValue = stringResource(R.string.name),
-                painterResource = painterResource(id = R.drawable.name_icon),
-                onTextSelected = {
-                    signUpViewModel.onEvent(AuthUiEvent.NameChange(it))
-                }
-            )
-            Spacing(size = 15.dp)
+//            MyTextField(
+//                labelValue = stringResource(R.string.name),
+//                painterResource = painterResource(id = R.drawable.name_icon),
+//                onTextSelected = {
+//                    signUpViewModel.onEvent(AuthUiEvent.NameChange(it))
+//                }
+//            )
+//            Spacing(size = 15.dp)
             MyTextField(
                 labelValue = stringResource(R.string.email),
                 painterResource = painterResource(id = R.drawable.email),
@@ -87,12 +86,12 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = hiltViewModel()){
             ButtonComponent(value = stringResource(R.string.sign_up)) {
                 signUpViewModel.onEvent(AuthUiEvent.AuthButtonClicked)
             }
-            GoogleSignInButton {
-                signUpViewModel.onEvent(AuthUiEvent.GoogleAuthButtonClicked)
+            GoogleSignInButton{
+                signUpViewModel.onEvent(AuthUiEvent.GoogleAuthButtonClicked(context))
             }
             Spacer(modifier = Modifier.weight(1f))
             ClickableLoginTextComponent(
-                txt = stringResource(R.string.already_have_an_account),
+                text = stringResource(R.string.already_have_an_account),
                 clickableText = stringResource(
                     id = R.string.login
                 )

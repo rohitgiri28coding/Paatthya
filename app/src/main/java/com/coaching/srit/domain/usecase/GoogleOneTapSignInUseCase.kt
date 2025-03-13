@@ -1,5 +1,6 @@
 package com.coaching.srit.domain.usecase
 
+import android.content.Context
 import com.coaching.srit.domain.Error
 import com.coaching.srit.domain.Result
 import com.coaching.srit.domain.model.User
@@ -11,8 +12,8 @@ class GoogleOneTapSignInUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) {
-    suspend fun executeGoogleOneTapSignIn(): Result<User, Error>  {
-        return when (val googleSignInResult = authRepository.signInWithGoogle()){
+    suspend fun executeGoogleOneTapSignIn(context: Context): Result<User, Error>  {
+        return when (val googleSignInResult = authRepository.signInWithGoogle(context)){
             is Result.Error -> {
                 Result.Error(googleSignInResult.error)
             }

@@ -1,9 +1,10 @@
 package com.coaching.srit.ui.viewmodel
 
+import android.content.Context
+
 sealed class AuthUiEvent {
-    data class NameChange(val name: String): AuthUiEvent()
     data class EmailChange(val email: String): AuthUiEvent()
     data class PasswordChange(val password: String): AuthUiEvent()
     data object AuthButtonClicked: AuthUiEvent()
-    data object GoogleAuthButtonClicked: AuthUiEvent()
+    data class GoogleAuthButtonClicked(val context: Context): AuthUiEvent()
 }

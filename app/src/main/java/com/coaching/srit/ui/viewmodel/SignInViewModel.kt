@@ -50,8 +50,7 @@ class SignInViewModel @Inject constructor(
                     password = event.password
                 )
             }
-            is AuthUiEvent.NameChange -> {
-            }
+            
             AuthUiEvent.AuthButtonClicked -> {
                 viewModelScope.launch {
                     signInInProgress.value = true
@@ -70,11 +69,14 @@ class SignInViewModel @Inject constructor(
                     }
                 }
             }
-            AuthUiEvent.GoogleAuthButtonClicked -> {
+            is AuthUiEvent.GoogleAuthButtonClicked -> {
+                val context = event.context
                 viewModelScope.launch {
                     signInInProgress.value = true
                     try {
-                        val googleSignUpResult = googleOneTapSignInUseCase.executeGoogleOneTapSignIn()
+                        val googleSignUpResult = googleOneTapSignInUseCase.executeGoogleOneTapSignIn(
+                            context
+                        )
                         manageSignInResult(googleSignUpResult)
                     }catch (e: Exception){
                         Log.d("Error: ", "${e.message}")

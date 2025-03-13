@@ -1,9 +1,7 @@
 package com.coaching.srit.ui.components
 
-import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,7 +25,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -64,6 +62,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -83,6 +82,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.coaching.srit.R
 import com.coaching.srit.ui.navigation.Router
 import com.coaching.srit.ui.navigation.Screen
@@ -93,6 +93,9 @@ import com.coaching.srit.ui.theme.interVariableFont
 import com.coaching.srit.ui.theme.kanit_light
 import com.coaching.srit.ui.theme.quicksandVariableFont
 import com.coaching.srit.ui.theme.sedanRegular
+import com.coaching.srit.ui.viewmodel.home.Batches
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun NormalTextComposable(
@@ -104,7 +107,12 @@ fun NormalTextComposable(
     endPadding: Dp = 0.dp,
     topPadding: Dp = 0.dp,
     bottomPadding: Dp = 0.dp,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
+    fontFamily: FontFamily = FontFamily(
+        Font(
+            resId = R.font.sedanregular
+        )
+    )
 ){
     Text(
         text = textValue,
@@ -124,42 +132,52 @@ fun NormalTextComposable(
         ),
         color =  color,      //colorResource(id= R.color.colorText) other method
         textAlign = textAlign,
-        fontFamily = FontFamily(
-            Font(
-                resId = R.font.sedanregular
-            )
-        )
+        fontFamily = fontFamily
     )
 }
 @Composable
-fun ClickableLoginTextComponent(txt: String, clickableText: String,onTextSelected: (String) -> Unit){
+fun ClickableLoginTextComponent(text: String, clickableText: String, onClick: () -> Unit) {
     val annotatedString = buildAnnotatedString {
-        append(txt)
-        withStyle(style = SpanStyle(color = Primary)){
-            pushStringAnnotation(tag = clickableText, annotation = clickableText)
-            append(clickableText)
-        }
-    }
-    ClickableText(text = annotatedString,
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 40.dp),
-        style = TextStyle(
-            color = Color(0xFFCFD5CC),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center,
-            fontFamily = interVariableFont
-        ),) {offset->
-        annotatedString.getStringAnnotations(offset,offset)
-            .firstOrNull()?.also { span->
-                Log.d("ClickableTextComponent", span.toString())
-                if (span.item == clickableText){
-                    onTextSelected(span.item)
-                }
-            }
 
+        val startIndex = text.indexOf(clickableText)
+        val endIndex = startIndex + clickableText.length
+
+        append(text)
+
+        addStyle(
+            style = SpanStyle(
+                color = Color.White,
+                fontSize = 18.sp
+            ),
+            start = 0,
+            end = text.length
+        )
+
+        addStyle(
+            style = SpanStyle(
+                color = Color(0xFF60D726),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            start = startIndex,
+            end = endIndex
+        )
+
+        addLink(
+            LinkAnnotation.Clickable(tag = clickableText.lowercase()) { onClick() },
+            start = startIndex,
+            end = endIndex
+        )
+    }
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+        BasicText(
+            text = annotatedString,
+            style = TextStyle(
+                fontSize = 18.sp,
+                color = Color.White,
+                fontFamily = interVariableFont
+            )
+        )
     }
 }
 
@@ -167,13 +185,14 @@ fun ClickableLoginTextComponent(txt: String, clickableText: String,onTextSelecte
 fun HeadingTextComposable(
     textValue: String,
     color: Color = Color.White,
-    textAlign: TextAlign = TextAlign.Center
+    textAlign: TextAlign = TextAlign.Center,
+    textUnit: TextUnit = 30.sp
 ){
     Text(
         text = textValue,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
-            fontSize = 30.sp,
+            fontSize = textUnit,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal
         ),
@@ -765,13 +784,13 @@ fun GalleryRowComponent(img1: Int, img2: Int, title1: String, title2: String, on
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SwipeableBatchComponent(images: List<Int> /*, titles: List<String>, onClick: () -> Unit*/) {
+fun SwipeableBatchComponent(batches: List<Batches>) {
+    val images = batches.map { it.imgUrl }
     val pagerState = rememberPagerState(pageCount = { images.size })
     HorizontalPager(state = pagerState, key = {it.hashCode()}) { index->
         Box {
-            ImageSliderComponent(images[index])
+            UrlImageComponent(images[index])
             Row (modifier = Modifier.align(Alignment.BottomCenter)){
                 images.forEachIndexed { index, _ ->
                     IndicatorComponent(active = pagerState.currentPage == index)
@@ -785,15 +804,16 @@ fun SwipeableBatchComponent(images: List<Int> /*, titles: List<String>, onClick:
 }
 
 @Composable
-private fun ImageSliderComponent(img: Int) {
-    Image(
-        painter = painterResource(id = img),
+fun UrlImageComponent(imgUrl: String) {
+    AsyncImage(
+        model = imgUrl,
         contentDescription = "",
         contentScale = ContentScale.Fit,
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = painterResource(id = R.drawable.android_banner), // Optional: Add a placeholder
     )
 }
+
 
 @Composable
 fun IndicatorComponent(active: Boolean){
@@ -805,59 +825,79 @@ fun IndicatorComponent(active: Boolean){
 }
 
 @Composable
-fun BatchComponent(title: String, img: Int, detail: String, onClick: () -> Unit){
+fun BatchComponent(batch: Batches, onExploreButtonClick: () -> Unit, onRedirectToPaymentPortal: () -> Unit){
     Column (modifier = Modifier
         .fillMaxWidth()
         .border(2.dp, Color.White)
         .padding(8.dp)){
         Column(modifier = Modifier
-            .clickable { onClick.invoke() }) {
+            .clickable { onExploreButtonClick.invoke() }) {
+            Spacing(10.dp)
             NormalTextComposable(
-                textValue = title,
+                textValue = batch.title,
                 fontSize = 20.sp,
                 )
-            Box(modifier = Modifier) {
-                Image(
-                    painter = painterResource(id = img),
-                    contentDescription = title,
-                    contentScale = ContentScale.Fit
-                )
-            }
-            DetailedTextComposable(text = detail)
             HorizontalDivider()
-            Spacing(size = 20.dp)
-            Row (modifier = Modifier.fillMaxWidth()){
-                Text(text = buildAnnotatedString {
-                    append("                     ")
-                    withStyle(style = SpanStyle(
-                        color = Color.White,
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold
-                    )){
-                        append("₹6,000/-")
-                    }
-                    append("   ")
-                    withStyle(style = SpanStyle(
-                        color = Color.White,
-                        textDecoration = TextDecoration.LineThrough,
-                        fontSize = 20.sp
-                    )){
-                         append("₹18,000/-")
-                    }
-                },
-                    fontFamily = sedanRegular,
-                    textAlign = TextAlign.Center)
+            Spacing(3.dp)
+            Box {
+                UrlImageComponent(batch.imgUrl)
             }
+            Spacing(3.dp)
+            HorizontalDivider()
+            Spacing(size = 15.dp)
+            PriceComponent(batch.price, batch.mrp)
         }
-        Spacing(size = 20.dp)
+        Spacing(size = 15.dp)
+        HorizontalDivider()
+        Spacing(10.dp)
         Column {
             TransparentButtonComponent(value = "Explore") {
+                onExploreButtonClick.invoke()
             }
             Spacing(size = 10.dp)
-            ButtonComponent(value = "Buy Now"){}
+            ButtonComponent(value = "Buy Now"){
+                onRedirectToPaymentPortal.invoke()
+            }
         }
         Spacing(size = 10.dp)
     }
+}
+
+@Composable
+fun PriceComponent(price: Double, mrp: Double) {
+    val priceText = formatNumber(price)
+    val mrpText = formatNumber(mrp)
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = buildAnnotatedString {
+                append("                     ")
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.White,
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append("₹${priceText}/-")
+                }
+                append("   ")
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.White,
+                        textDecoration = TextDecoration.LineThrough,
+                        fontSize = 20.sp
+                    )
+                ) {
+                    append("₹$mrpText/-")
+                }
+            },
+            fontFamily = sedanRegular,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+private fun formatNumber(number: Double): String {
+    return NumberFormat.getInstance(Locale("en", "IN")).format(number)
 }
 @Composable
 fun GoogleSignInButton(openGoogleSignIn: () -> Unit) {
@@ -882,8 +922,8 @@ fun GoogleSignInButton(openGoogleSignIn: () -> Unit) {
         {
             openGoogleSignIn.invoke()
         }
-        Column {
-            Spacing(size = 10.dp)
+        Column (modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+            Spacing(7.dp)
             NormalTextComposable(
                 textValue = stringResource(R.string.sign_in_with_google),
                 fontSize = 20.sp

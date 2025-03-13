@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.coaching.srit.ui.components.BackgroundImage
 import com.coaching.srit.ui.components.NormalTextComposable
 import com.coaching.srit.ui.components.Spacing

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -92,21 +93,23 @@ fun StudyScreen(){
                 startPadding = 10.dp
             )
             Spacing()
-            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_batches, contentDesc = "My Batches"){
+            Row (modifier = Modifier.fillMaxWidth().padding(4.dp), horizontalArrangement = Arrangement.SpaceEvenly){
+                ClickableImageComposable(img = R.drawable.my_batches_tab_icon, contentDesc = "My Batches"){
                     Router.navigateTo(Screen.MyBatchScreen)
                 }
-                ClickableImageComposable(img = R.drawable.recently_watched, contentDesc = "Recently Watched"){
-                    Router.navigateTo(Screen.RecentlyWatchedScreen)
+                Spacing(4.dp)
+                ClickableImageComposable(img = R.drawable.quiz_tab_icon, contentDesc = "Tests & Quiz"){
+                    Router.navigateTo(Screen.MyDownloadsScreen)
                 }
+
             }
             Spacing(size = 25.dp)
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_doubts, contentDesc = "My Doubts"){
+                ClickableImageComposable(img = R.drawable.my_doubts_tab_icon, contentDesc = "My Doubts"){
                     Router.navigateTo(Screen.MyDoubtsScreen)
                 }
-                ClickableImageComposable(img = R.drawable.my_downloads, contentDesc = "My Downloads"){
-                    Router.navigateTo(Screen.MyDownloadsScreen)
+                ClickableImageComposable(img = R.drawable.notes_tab_icon, contentDesc = "Notes"){
+                    Router.navigateTo(Screen.RecentlyWatchedScreen)
                 }
             }
         }

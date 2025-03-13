@@ -26,7 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signInWithEmailAndPassword(email: String, password: String): Result<User, AuthError> {
         return try {
             auth.signInWithEmailAndPassword(email, password).await()
-            Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!, name = ""))
+            Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!))
         }catch (e: Exception) {
             Log.d("sign in error2: ", "${e.printStackTrace()}")
             if (e.message?.contains("INVALID_LOGIN_CREDENTIALS") == true)
@@ -40,7 +40,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signInWithGoogle(): Result<User, AuthError> {
+    override suspend fun signInWithGoogle(context: Context): Result<User, AuthError> {
         try {
             val credentialManager = CredentialManager.create(context)
 
@@ -61,7 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
             val firebaseCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
 
             auth.signInWithCredential(firebaseCredential).addOnSuccessListener {  }.await()
-            return Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!, name = auth.currentUser!!.displayName!!))
+            return Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!))
         }catch (e: Exception){
             Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
             return Result.Error(AuthError.SignInError.UNKNOWN_ERROR)
@@ -72,7 +72,7 @@ class AuthRepositoryImpl @Inject constructor(
         try {
             auth.createUserWithEmailAndPassword(email, password).await()
             Log.d("sign up: ", "$auth")
-             return Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!, name = ""))
+             return Result.Success(User(uid = auth.uid!!, email = auth.currentUser!!.email!!))
         }catch (e: Exception){
             Log.d("Error 6: ", "${e.printStackTrace()}")
             return Result.Error(AuthError.SignInError.UNKNOWN_ERROR)

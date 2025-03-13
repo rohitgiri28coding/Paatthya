@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
     val signUpErrorEvents = signUpErrorEventChannel.receiveAsFlow()
 
     init {
-        signUpUiState.value = AuthUiState(email = "", password = "", name = "")
+        signUpUiState.value = AuthUiState(email = "", password = "")
     }
     fun onEvent(event: AuthUiEvent){
         when(event){
@@ -47,12 +47,6 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                 )
             }
 
-            is AuthUiEvent.NameChange -> {
-                signUpUiState.value = signUpUiState.value.copy(
-                    name = event.name
-                )
-            }
-
             AuthUiEvent.AuthButtonClicked -> {
                 viewModelScope.launch {
                     signUpInProgress.value = true
@@ -60,7 +54,6 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                         val signUpResult = signUpUseCase.executeSignUp(
                             signUpUiState.value.email,
                             signUpUiState.value.password,
-                            signUpUiState.value.name
                         )
                         manageSignUpResult(signUpResult)
                     }catch (e: Exception){
@@ -73,11 +66,12 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
                 }
             }
 
-            AuthUiEvent.GoogleAuthButtonClicked -> {
+            is AuthUiEvent.GoogleAuthButtonClicked -> {
+                val context = event.context
                 viewModelScope.launch {
                     signUpInProgress.value = true
                     try {
-                        val googleSignUpResult = googleOneTapSignInUseCase.executeGoogleOneTapSignIn()
+                        val googleSignUpResult = googleOneTapSignInUseCase.executeGoogleOneTapSignIn(context)
                         manageSignUpResult(googleSignUpResult)
                     }catch (e: Exception){
                         Log.d("Error: 2", "${e.message}")

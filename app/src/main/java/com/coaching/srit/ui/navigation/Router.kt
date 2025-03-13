@@ -2,6 +2,7 @@ package com.coaching.srit.ui.navigation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import com.coaching.srit.ui.viewmodel.home.Batches
 
 sealed class Screen {
     data object SplashScreen : Screen()
@@ -19,6 +20,7 @@ sealed class Screen {
     data object MyDoubtsScreen: Screen()
     data object RecentlyWatchedScreen: Screen()
     data object MyDownloadsScreen: Screen()
+    data class ExploreBatchScreen(val batch: Batches): Screen()
 }
 
 object Router {
