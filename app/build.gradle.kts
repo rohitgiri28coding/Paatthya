@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    namespace = "com.coaching.srit"
+    namespace = "com.coaching.paatthya"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.coaching.srit"
-        minSdk = 24
+        applicationId = "com.coaching.paatthya"
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -86,5 +86,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation( libs.androidx.datastore.preferences)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+//    implementation(libs.androidx.media3.exoplayer.dash) // Optional, if you're using DASH
+    implementation(libs.androidx.media3.common)
 
 }

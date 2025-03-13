@@ -2,17 +2,22 @@
   "project_info": {
     "project_number": "539055371664",
     "project_id": "srit-feea9",
-    "storage_bucket": "srit-feea9.appspot.com"
+    "storage_bucket": "srit-feea9.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:539055371664:android:b6b63251397732aed5ef15",
+        "mobilesdk_app_id": "1:539055371664:android:5e4f3040ed2427d7d5ef15",
         "android_client_info": {
-          "package_name": "com.coaching.srit"
+          "package_name": "com.coaching.paatthya"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "539055371664-4ann9clm96n22jdnejubidpcp2hi1fe0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyChIkoqHnWww7AX_b0htF-pLOa2U95Yq5U"
@@ -20,7 +25,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539055371664-4ann9clm96n22jdnejubidpcp2hi1fe0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539055371664:android:dffa183cee8f14b6d5ef15",
+        "android_client_info": {
+          "package_name": "org.project.paatthyaeducatorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539055371664-4ann9clm96n22jdnejubidpcp2hi1fe0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChIkoqHnWww7AX_b0htF-pLOa2U95Yq5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539055371664-4ann9clm96n22jdnejubidpcp2hi1fe0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

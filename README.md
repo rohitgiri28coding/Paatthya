@@ -1,11 +1,11 @@
 
 ---
 
-# 🏆 Srit - Your Personalized Coaching Companion  
+# 🏆 Paatthya - Your Personalized Coaching Companion  
 
-Srit is an Android coaching app built using **Jetpack Compose** to provide a seamless, modern, and interactive learning experience. The app allows students to **watch lectures (YouTube videos), stay updated with notices, check live batches, view results, and access important sections like Contact Us, Terms & Conditions, Gallery, and About Us**. 
+Paatthya is an Android coaching app built using **Jetpack Compose** to provide a seamless, modern, and interactive learning experience. The app allows students to **watch lectures (YouTube videos), stay updated with notices, check live batches, view results, and access important sections like Contact Us, Terms & Conditions, Gallery, and About Us**. 
 
-Srit utilizes **Firebase Authentication** for secure login/signup, including **Google Sign-In and One-Tap Sign-In**, and **Firestore** for managing user data (students and admins) and notices.  
+Paatthya utilizes **Firebase Authentication** for secure login/signup, including **Google Sign-In and One-Tap Sign-In**, and **Firestore** for managing user data (students and admins) and notices.  
 
 ---
 
@@ -40,7 +40,7 @@ Srit utilizes **Firebase Authentication** for secure login/signup, including **G
 
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/rohitgiri28coding/Srit.git
+   git clone https://github.com/rohitgiri28coding/Paatthya.git
    ```
 2. Open in **Android Studio** (latest version recommended).  
 3. Build and run the project using an **emulator or physical device**.  
@@ -68,7 +68,7 @@ For any queries, feedback, or feature requests, feel free to reach out:
 
 ---
 
-🔹 **Srit - Transform Your Learning Experience!**  
+🔹 **Paatthya - Transform Your Learning Experience!**  
 
 ---
 

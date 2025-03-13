@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SRIT Classes</string>
+    <string name="app_name">Paatthya</string>
     <string name="hide_password">Hide Password</string>
     <string name="show_password">Show Password</string>
     <string name="login">Login</string>
@@ -13,7 +13,7 @@
     <string name="email">Email</string>
     <string name="new_password">New Password</string>
     <string name="logo">logo</string>
-    <string name="welcome_to_srit">Welcome to SRIT!</string>
+    <string name="welcome_to_paatthya">Welcome to Paatthya!</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="ab_crack_hoga_har_exam">"                                 Ab Crack Hoga Har Exam!!"</string>
