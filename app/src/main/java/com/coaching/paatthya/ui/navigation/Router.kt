@@ -3,6 +3,7 @@ package com.coaching.paatthya.ui.navigation
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.coaching.paatthya.ui.viewmodel.home.Batches
+import com.coaching.paatthya.ui.viewmodel.home.Lecture
 
 sealed class Screen {
     data object SplashScreen : Screen()
@@ -20,7 +21,8 @@ sealed class Screen {
     data object MyDoubtsScreen: Screen()
     data object MyDownloadsScreen: Screen()
     data object NotesScreen : Screen()
-    data object LectureScreen : Screen()
+    data class LectureScreen(val lecture: Lecture) : Screen()
+    data class DetailBatchScreen(val batch: Batches): Screen()
 
     data class ExploreBatchScreen(val batch: Batches): Screen()
 }

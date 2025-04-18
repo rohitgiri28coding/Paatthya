@@ -33,7 +33,7 @@ class ViewAllBatchesViewModel: ViewModel() {
 
     private fun fetchBatchesRealtime() {
         viewModelScope.launch {
-            val doc = db.collection("myBatch")
+            val doc = db.collection("batches")
                 .get().await()
             val batches = doc.toObjects(Batches::class.java)
             _batches.emit(batches)
@@ -63,13 +63,13 @@ class ViewAllBatchesViewModel: ViewModel() {
     }
 
 
-    private fun getCurrentDateFormatted(pattern: String = "dd-MM-yyyy"): String {
+    private fun getCurrentDateFormatted(pattern: String = "dd/MM/yyyy"): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern(pattern)
         return currentDate.format(formatter)
     }
 
-    private fun compareDates(date1: String, date2: String, pattern: String = "dd-MM-yyyy"): Int {
+    private fun compareDates(date1: String, date2: String, pattern: String = "dd/MM/yyyy"): Int {
         val formatter = DateTimeFormatter.ofPattern(pattern)
         val localDate1 = LocalDate.parse(date1, formatter)
         val localDate2 = LocalDate.parse(date2, formatter)

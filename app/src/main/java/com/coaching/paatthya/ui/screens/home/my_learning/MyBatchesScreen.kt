@@ -43,7 +43,7 @@ fun MyBatchesScreen(myBatchesViewModel: MyBatchesViewModel = viewModel()) {
                         MyBatchComponent (
                             batch,
                             onExploreButtonClick = {
-
+                                Router.navigateTo(Screen.DetailBatchScreen(batch))
                             }
                         )
                         Spacing()

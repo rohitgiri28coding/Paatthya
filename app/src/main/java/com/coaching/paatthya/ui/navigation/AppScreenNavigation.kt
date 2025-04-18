@@ -1,5 +1,7 @@
 package com.coaching.paatthya.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +12,7 @@ import com.coaching.paatthya.ui.screens.auth.signup.SignUpScreen
 import com.coaching.paatthya.ui.screens.auth.splashscreen.SplashScreen
 import com.coaching.paatthya.ui.screens.auth.welcomescreen.WelcomeScreen
 import com.coaching.paatthya.ui.screens.home.Home
+import com.coaching.paatthya.ui.screens.home.batches.BatchDetailScreen
 import com.coaching.paatthya.ui.screens.home.batches.ExploreBatchScreen
 import com.coaching.paatthya.ui.screens.home.contactus.ContactUsScreen
 import com.coaching.paatthya.ui.screens.home.gallery.GalleryScreen
@@ -22,6 +25,7 @@ import com.coaching.paatthya.ui.screens.home.study.LectureScreen
 import com.coaching.paatthya.ui.screens.home.termsandconditions.TermsAndConditionsScreen
 import com.coaching.paatthya.ui.viewmodel.AuthViewModel
 
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
 
@@ -46,7 +50,14 @@ fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
                 val batch = (Router.currentScreen.value as Screen.ExploreBatchScreen).batch
                 ExploreBatchScreen(batch = batch)
             }
-            Screen.LectureScreen -> LectureScreen()
+            is Screen.LectureScreen -> {
+                val lecture = (Router.currentScreen.value as Screen.LectureScreen).lecture
+                LectureScreen(lecture)
+            }
+            is Screen.DetailBatchScreen ->{
+                val batch = (Router.currentScreen.value as Screen.DetailBatchScreen).batch
+                BatchDetailScreen(batch = batch)
+            }
         }
     }
 }

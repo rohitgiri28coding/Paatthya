@@ -1,6 +1,11 @@
 package com.coaching.paatthya.ui.screens.home.study
 
+import android.os.Build
+import android.view.WindowInsets
+import androidx.activity.compose.LocalActivity
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,12 +13,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.FullscreenExit
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,13 +38,17 @@ import androidx.core.net.toUri
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.coaching.paatthya.ui.components.BackgroundImage
+import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
+import com.coaching.paatthya.ui.viewmodel.home.Lecture
 
+
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
-fun LectureScreen() {
+fun LectureScreen(lecture: Lecture) {
     Surface {
         BackgroundImage()
         Scaffold(topBar = {
@@ -39,32 +58,101 @@ fun LectureScreen() {
             Column(modifier = Modifier
                 .padding(it)
                 .verticalScroll(rememberScrollState())) {
-VideoScreen()            }
+                NormalTextComposable(
+                    textValue = "Lecture Name: ${lecture.lectureName}",
+                )
+                VideoScreen(link = lecture.lectureLink)
+            }
         }
     }
     SystemBackButtonHandler {
         Router.navigateTo(Screen.HomeScreen)
     }
 }
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
-fun VideoScreen() {
-    val videoUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/videoplayback.mp4"
+fun VideoScreen(link: String) {
+    var isFullScreen by remember { mutableStateOf(false) }
 
-    Column(
+    if (isFullScreen) {
+        FullScreenVideoPlayer(link) {
+            isFullScreen = false
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
+            Text(
+                text = "Lecture Video",
+                color = Color.White,
+                modifier = Modifier.padding(16.dp)
+            )
+            Box {
+                VideoPlayer(
+                    videoUrl = link,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp)
+                )
+                IconButton(
+                    onClick = { isFullScreen = true },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Fullscreen,
+                        contentDescription = "Full Screen",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
+    }
+}
+@RequiresApi(Build.VERSION_CODES.R)
+@Composable
+fun FullScreenVideoPlayer(videoUrl: String, onExitFullScreen: () -> Unit) {
+    val activity = LocalActivity.current
+
+    // Hide system UI
+    LaunchedEffect(Unit) {
+        activity?.window?.insetsController?.hide(WindowInsets.Type.systemBars())
+    }
+
+    // Show system UI again on exit
+    DisposableEffect(Unit) {
+        onDispose {
+            activity?.window?.insetsController?.show(WindowInsets.Type.systemBars())
+        }
+    }
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        Text(
-            text = "Lecture Video",
-            color = Color.White,
-            modifier = Modifier.padding(16.dp)
+        VideoPlayer(
+            videoUrl = videoUrl,
+            modifier = Modifier.fillMaxSize()
         )
-        VideoPlayer(videoUrl = videoUrl, modifier = Modifier
-            .fillMaxWidth()
-            .height(220.dp))
+        IconButton(
+            onClick = onExitFullScreen,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.FullscreenExit,
+                contentDescription = "Exit Full Screen",
+                tint = Color.White
+            )
+        }
     }
 }
+
 
 @Composable
 fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
@@ -95,4 +183,3 @@ fun VideoPlayer(videoUrl: String, modifier: Modifier = Modifier) {
         }
     }
 }
-

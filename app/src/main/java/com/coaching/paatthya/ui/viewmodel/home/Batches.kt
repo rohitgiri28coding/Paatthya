@@ -10,10 +10,13 @@ data class Batches(
     val imgUrl: String = "",
     val price: Double=0.0,
     val mrp: Double=0.0,
+    val lectures: List<Lecture> = emptyList<Lecture>(),
+    val notes: List<Notes> = emptyList<Notes>(),
+    val assignment: List<Assignment> = emptyList<Assignment>(),
     val description: String="",
     val limitedTimeDeal: Boolean = false
 ){
-    constructor() : this("","","","","", 0.0,0.0,"",false)
+    constructor() : this("","","","","", 0.0,0.0,emptyList(),emptyList(),emptyList(),"",false)
 }
 
 

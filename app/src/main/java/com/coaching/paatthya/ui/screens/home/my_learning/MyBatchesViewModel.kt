@@ -1,14 +1,15 @@
 package com.coaching.paatthya.ui.screens.home.my_learning
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.coaching.paatthya.ui.viewmodel.home.Batches
-import com.coaching.paatthya.ui.viewmodel.home.batch
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class MyBatchesViewModel : ViewModel() {
@@ -19,10 +20,15 @@ class MyBatchesViewModel : ViewModel() {
     private val user = Firebase.auth.currentUser
 
     init {
-        _batches.value= batch
-//        viewModelScope.launch {
-//            fetchUserBatches()
-//        }
+        viewModelScope.launch {
+            fetchAllBatches()
+        }
+    }
+
+    private suspend fun fetchAllBatches() {
+        val doc = db.collection("batches").get().await()
+        _batches.value = doc.toObjects(Batches::class.java)
+
     }
 
     private suspend fun fetchUserBatches() {
@@ -30,7 +36,7 @@ class MyBatchesViewModel : ViewModel() {
             try {
                 val doc = db.collection("users").document(it.uid).get().await()
                 if (doc.exists()) {
-                    val batches = doc.get("myBatch") as? List<String> ?: emptyList() // Safe cast and default
+                    val batches = doc.get("batches") as? List<String> ?: emptyList() // Safe cast and default
                     fetchBatchesRealtime(batches)
                 } else {
                     println("User document not found.")
@@ -45,7 +51,7 @@ class MyBatchesViewModel : ViewModel() {
         val fetchedBatches = mutableListOf<Batches>() // Avoid duplicates
         batchIdList.forEach { batchId ->
             try {
-                val doc = db.collection("myBatch").document(batchId).get().await()
+                val doc = db.collection("batches").document(batchId).get().await()
                 val batch = doc.toObject(Batches::class.java)
                 if (batch != null) {
                     fetchedBatches.add(batch)

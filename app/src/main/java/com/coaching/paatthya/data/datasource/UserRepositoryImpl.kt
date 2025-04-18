@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -24,7 +23,6 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
         private val uidKey = stringPreferencesKey("user_uid")
-        private val isAdminKey = booleanPreferencesKey("user_isAdmin")
         private val emailKey = stringPreferencesKey("user_email")
     }
     private suspend fun getUserDocReference(user: User): DocumentSnapshot {
@@ -47,9 +45,8 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
     }
     override suspend fun fetchUser(userDocRef: DocumentSnapshot, user: User): Result<User, FirestoreDbError> {
         val name = userDocRef.getString("name") ?: "Random One"
-        val isAdmin = userDocRef.getBoolean("isAdmin") == true
-        saveUser(User(user.uid, name, isAdmin, emptyList(), user.email))
-        return Result.Success(User(user.uid, name, isAdmin, emptyList(), user.email))
+        saveUser(User(user.uid, name, emptyList(), user.email))
+        return Result.Success(User(user.uid, name, emptyList(), user.email))
     }
 
     override suspend fun registerUser(user: User): Result<User, FirestoreDbError> {
@@ -59,21 +56,19 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
                 .set(
                     hashMapOf(
                         "uid" to user.uid,
-                        "isAdmin" to user.isAdmin,
                         "email" to user.email
                     )
                 )
                 .await()
             saveUser(user)
             return Result.Success(user)
-        }catch (e: Exception){
+        }catch (_: Exception){
             return Result.Error(FirestoreDbError.DBError.UNKNOWN_ERROR)
         }
     }
     private suspend fun saveUser(user: User) {
         context.dataStore.edit { preferences ->
             preferences[uidKey] = user.uid
-            preferences[isAdminKey] = user.isAdmin
             preferences[emailKey] = user.email
         }
     }
@@ -82,9 +77,8 @@ class UserRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
 
         return context.dataStore.data.map { preferences ->
             val uid = preferences[uidKey] ?: return@map null
-            val isAdmin = preferences[isAdminKey] ?: false
             val email = preferences[emailKey] ?: return@map null
-            val user = User(uid=uid, isAdmin=isAdmin, email = email)
+            val user = User(uid=uid, email = email)
             Log.d("user", user.toString())
             user
         }

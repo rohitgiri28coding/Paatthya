@@ -2,8 +2,6 @@ package com.coaching.paatthya.ui.viewmodel
 
 import android.content.Context
 
-import android.content.Context
-
 sealed class AuthUiEvent {
     data class EmailChange(val email: String): AuthUiEvent()
     data class PasswordChange(val password: String): AuthUiEvent()

@@ -2,7 +2,6 @@ package com.coaching.paatthya.ui.screens.home.study
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,9 +56,9 @@ fun StudyScreen(){
                 modifier = Modifier.padding(start = 15.dp)
             )
             Spacing(size = 20.dp)
-            Row (modifier = Modifier.fillMaxWidth().clickable{
-                Router.navigateTo(Screen.LectureScreen)
-            }, horizontalArrangement = Arrangement.Center){
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center){
                 Text(
                     text = "Today's Class",
                     fontFamily = kaushanScriptRegular,

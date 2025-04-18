@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <external-path name="download" path="Download/Paatthya/notice" />
+    <external-path name="notices" path="Download/Paatthya/notice" />
+    <external-path name="assignments" path="Download/Paatthya/batch/assignment" />
+    <external-path name="notes" path="Download/Paatthya/batch/notes" />
 </paths>
