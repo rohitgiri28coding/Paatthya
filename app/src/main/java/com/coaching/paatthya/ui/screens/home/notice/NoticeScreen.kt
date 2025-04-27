@@ -66,7 +66,7 @@ fun NoticeScreen(viewModel: NoticeViewModel = viewModel()) {
             items(notices.value) { notice ->
                 Row {
                     Image(
-                        painter = painterResource(id = R.drawable.profile_img),
+                        painter = painterResource(id = R.drawable.paatthya_app_logo),
                         contentDescription = "Profile",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -207,64 +207,3 @@ fun NoticeCard(viewModel: NoticeViewModel, notice: Notice, context: Context) {
         }
     }
 }
-
-val sampleNotices = listOf(
-    Notice(
-        title = "New Course",
-        description = "New course will be launched soon on jetpack compose.",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/jetpack_compose_logo_with_rocket.png",
-        fileType = "image",
-        timestamp = System.currentTimeMillis()
-    ),
-
-    Notice(
-        title = "New Cousrse",
-        description = "New course will be launched soon on Kotlin .",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/kotlin-vs-java.jpg",
-        fileType = "image",
-        timestamp = System.currentTimeMillis() - 3000000
-    ),
-    Notice(
-        title = "Training Session",
-        description = "Details about the upcoming training session.",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/GO4Youth-Circular_250221_082428.pdf",
-        fileType = "pdf",
-        timestamp = System.currentTimeMillis() - 4000000
-    ),
-    Notice(
-        title = "Intra College Competition",
-        description = "Don't forget about the competition this weekend!",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2025-04-12+at+13.57.19_4ba0b616.jpg",
-        fileType = "image",
-        timestamp = System.currentTimeMillis() - 5000000
-    ),
-    Notice(
-        title = "System Maintenance",
-        description = "The system will be down for maintenance tonight.",
-        fileUrl = "",
-        fileType = "announcements",
-        timestamp = System.currentTimeMillis() - 6000000
-    ),
-    Notice(
-        title = "Motivational Lecture",
-        description = "Motivational lecture will be given by Flying Officer Shubham Kumar.",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/motivational+lecture.pdf",
-        fileType = "docx",
-        timestamp = System.currentTimeMillis() - 7000000
-    ),
-    Notice(
-        title = "Project Update",
-        description = "Project progress report is now available.",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/KLiC-Mobile-App-Development-Syllabus.docx",
-        fileType = "docx",
-        timestamp = System.currentTimeMillis() - 8000000
-    ),
-    Notice(
-        title = "New Batch",
-        description = "Android new batch is live now.",
-        fileUrl = "https://sritbucket.s3.ap-south-1.amazonaws.com/android_banner.png",
-        fileType = "image",
-        timestamp = System.currentTimeMillis() - 2000000
-    )
-)
-

@@ -203,7 +203,7 @@ fun HeadingTextComposable(
     )
 }
 @Composable
-fun ButtonComponent(
+fun RoundedButtonComponent(
     value: String,
     isEnabled: Boolean = true,
     onClick: () -> Unit
@@ -240,6 +240,60 @@ fun ButtonComponent(
         }
     }
 }
+@Composable
+fun ButtonComponent(
+    modifier: Modifier = Modifier,
+    text: String,
+    icon: Int,
+    isEnabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = { onClick.invoke() },
+        modifier = modifier
+            .height(55.dp), // Only height here
+        contentPadding = PaddingValues(),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent
+        ),
+        enabled = isEnabled
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.horizontalGradient(
+                        listOf(Color(0xFF1DE22D), Color(0xFF13751D)),
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 15.dp)
+            ) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = text,
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = text,
+                    fontSize = 18.sp,
+                    color = Color.White,
+                    fontFamily = FontFamily(Font(R.font.sedanregular, weight = FontWeight.W500))
+                )
+            }
+        }
+    }
+}
+
 @Composable
 fun TransparentButtonComponent(
     value: String,
@@ -811,7 +865,7 @@ fun UrlImageComponent(imgUrl: String) {
         contentDescription = "",
         contentScale = ContentScale.Fit,
         modifier = Modifier.fillMaxWidth(),
-        placeholder = painterResource(id = R.drawable.android_banner), // Optional: Add a placeholder
+        placeholder = painterResource(id = R.drawable.password), // Optional: Add a placeholder
     )
 }
 
@@ -856,7 +910,7 @@ fun PricedBatchComponent(batch: Batches, onExploreButtonClick: () -> Unit, onRed
                 onExploreButtonClick.invoke()
             }
             Spacing(size = 10.dp)
-            ButtonComponent(value = "Buy Now"){
+            RoundedButtonComponent(value = "Buy Now"){
                 onRedirectToPaymentPortal.invoke()
             }
         }
@@ -892,7 +946,7 @@ fun MyBatchComponent(batch: Batches, onExploreButtonClick: () -> Unit){
             Spacing(size = 15.dp)
             HorizontalDivider()
             Spacing(10.dp)
-            ButtonComponent (value = "Go to Study Material") {
+            RoundedButtonComponent (value = "Go to Study Material") {
                 onExploreButtonClick.invoke()
             }
             Spacing(size = 10.dp)

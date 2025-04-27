@@ -20,7 +20,7 @@ import com.coaching.paatthya.R
 import com.coaching.paatthya.domain.UserErrorEvent
 import com.coaching.paatthya.ui.ObserveEvents
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.ClickableLoginTextComponent
 import com.coaching.paatthya.ui.components.GoogleSignInButton
 import com.coaching.paatthya.ui.components.HeadingTextComposable
@@ -83,7 +83,7 @@ fun LoginScreen(signInViewModel: SignInViewModel = hiltViewModel()) {
                 Router.navigateTo(Screen.ForgotPasswordScreen)
             }
             Spacing(size = 20.dp)
-            ButtonComponent(value = stringResource(id = R.string.login))
+            RoundedButtonComponent(value = stringResource(id = R.string.login))
             {
                 signInViewModel.onEvent(AuthUiEvent.AuthButtonClicked)
             }

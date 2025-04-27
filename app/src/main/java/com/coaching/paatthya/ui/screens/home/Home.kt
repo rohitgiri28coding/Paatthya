@@ -102,7 +102,7 @@ private fun HomeNavigationDrawer(
         drawerContentColor = Color(0xFF121316)
     ) {
         Spacing(size = 20.dp)
-        HeadingTextComposable(textValue = "S.R.I.T")
+        HeadingTextComposable(textValue = "Paatthya")
         Spacing()
         HorizontalDivider()
         Spacing(size = 20.dp)

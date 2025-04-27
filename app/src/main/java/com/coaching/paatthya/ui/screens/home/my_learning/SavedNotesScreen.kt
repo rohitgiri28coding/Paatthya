@@ -16,11 +16,11 @@ import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
 
 @Composable
-fun NotesScreen() {
+fun SavedNotesScreen() {
     Surface {
         BackgroundImage()
         Scaffold(topBar = {
-            TopAppBarWithBackButton(text = "Notes")
+            TopAppBarWithBackButton(text = "Saved Notes")
         },
             containerColor = Color.Transparent) {
             Column(modifier = Modifier

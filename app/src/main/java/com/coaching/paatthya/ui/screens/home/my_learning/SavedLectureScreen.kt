@@ -10,23 +10,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.coaching.paatthya.ui.components.BackgroundImage
+import com.coaching.paatthya.ui.components.Spacing
 import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
+import com.coaching.paatthya.ui.screens.home.batches.ContentItem
+import com.coaching.paatthya.ui.screens.home.batches.LectureCard
 
 @Composable
-fun QuizAndTestsScreen() {
+fun SavedLectureScreen() {
     Surface {
         BackgroundImage()
         Scaffold(topBar = {
-            TopAppBarWithBackButton(text = "Quiz & Tests")
+            TopAppBarWithBackButton(text = "Saved Lectures")
         },
             containerColor = Color.Transparent) {
             Column(modifier = Modifier
                 .padding(it)
                 .verticalScroll(rememberScrollState())) {
-
+                Spacing()
+                LectureCard(ContentItem(
+                    index = 1,
+                    title = "Hc Verma Sir Interview",
+                    fileUrl = "",
+                    fileType = "yt video"
+                )) {
+                    Router.navigateTo(Screen.YoutubeLectureScreen)
+                }
             }
         }
     }

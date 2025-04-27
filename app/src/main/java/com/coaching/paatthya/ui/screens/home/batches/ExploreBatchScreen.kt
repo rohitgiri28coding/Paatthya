@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.PriceComponent
 import com.coaching.paatthya.ui.components.Spacing
@@ -77,7 +77,7 @@ fun ExploreBatchScreen(batch: Batches){
                     HorizontalDivider()
                     Spacing(25.dp)
                     Box(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
-                        ButtonComponent(value = "Buy Now") {
+                        RoundedButtonComponent(value = "Buy Now") {
 //                          onRedirectToPaymentPortal.invoke()
                         }
                     }

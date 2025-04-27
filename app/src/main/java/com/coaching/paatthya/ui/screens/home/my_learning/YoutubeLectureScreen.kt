@@ -9,24 +9,27 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.coaching.paatthya.ui.components.BackgroundImage
 import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
+import com.coaching.paatthya.ui.screens.home.YoutubePlayer
 
 @Composable
-fun MyDoubtsScreen() {
+fun YoutuberLectureScreen() {
+    val localLifecycle = LocalLifecycleOwner.current
     Surface {
         BackgroundImage()
         Scaffold(topBar = {
-            TopAppBarWithBackButton(text = "My Doubts")
+            TopAppBarWithBackButton(text = "Lecture")
         },
             containerColor = Color.Transparent) {
             Column(modifier = Modifier
                 .padding(it)
                 .verticalScroll(rememberScrollState())) {
-
+                YoutubePlayer("8dEicZ0gMsw", localLifecycle)
             }
         }
     }

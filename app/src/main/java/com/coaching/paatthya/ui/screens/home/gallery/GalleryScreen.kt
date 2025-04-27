@@ -37,17 +37,17 @@ fun GalleryScreen() {
                     onClick2 = {}
                 )
                 GalleryRowComponent(
-                    img1 = R.drawable.director,
+                    img1 = R.drawable.paatthya_app_logo,
                     img2 = R.drawable.review_img,
-                    title1 = "Director",
+                    title1 = "",
                     title2 = "Alumni",
                     onClick1 = {},
                     onClick2 = {}
                 )
                 GalleryRowComponent(
-                    img1 = R.drawable.gift2,
+                    img1 = R.drawable.review_image2,
                     img2 = 0,
-                    title1 = "Gift",
+                    title1 = "Alumni",
                     title2 = "",
                     onClick1 = {},
                     onClick2 = {}

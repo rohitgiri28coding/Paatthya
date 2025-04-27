@@ -18,9 +18,10 @@ sealed class Screen {
     data object ResultScreen: Screen()
     data object GalleryScreen: Screen()
     data object MyBatchScreen: Screen()
-    data object MyDoubtsScreen: Screen()
-    data object MyDownloadsScreen: Screen()
-    data object NotesScreen : Screen()
+    data object SavedLectureScreen: Screen()
+    data object QuizAndTestsScreen: Screen()
+    data object SavedNotesScreen : Screen()
+    data object YoutubeLectureScreen : Screen()
     data class LectureScreen(val lecture: Lecture) : Screen()
     data class DetailBatchScreen(val batch: Batches): Screen()
 

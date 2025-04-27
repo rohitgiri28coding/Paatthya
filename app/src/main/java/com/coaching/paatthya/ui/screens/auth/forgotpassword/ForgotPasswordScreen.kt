@@ -20,7 +20,7 @@ import com.coaching.paatthya.R
 import com.coaching.paatthya.domain.UserErrorEvent
 import com.coaching.paatthya.ui.ObserveEvents
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.HeadingTextComposable
 import com.coaching.paatthya.ui.components.MyTextField
 import com.coaching.paatthya.ui.components.NormalTextComposable
@@ -62,7 +62,7 @@ fun ForgotPasswordScreen(forgotPasswordViewModel: ForgotPasswordViewModel = hilt
                 forgotPasswordViewModel.onEvent(ForgotPasswordUiEvent.EmailChanged(it))
             }
             Spacing(size = 40.dp)
-            ButtonComponent(value = stringResource(R.string.send_reset_link)) {
+            RoundedButtonComponent(value = stringResource(R.string.send_reset_link)) {
                 forgotPasswordViewModel.onEvent(ForgotPasswordUiEvent.ValidateResetPasswordButton)
             }
         }
@@ -94,7 +94,7 @@ fun ForgotPasswordScreenResetLinkSent() {
                 textAlign = TextAlign.Start,
             )
             Spacing(size = 40.dp)
-            ButtonComponent(value = stringResource(id = R.string.login)) {
+            RoundedButtonComponent(value = stringResource(id = R.string.login)) {
                 Router.navigateTo(Screen.LoginScreen)
             }
             SystemBackButtonHandler {

@@ -17,9 +17,10 @@ import com.coaching.paatthya.ui.screens.home.batches.ExploreBatchScreen
 import com.coaching.paatthya.ui.screens.home.contactus.ContactUsScreen
 import com.coaching.paatthya.ui.screens.home.gallery.GalleryScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.MyBatchesScreen
-import com.coaching.paatthya.ui.screens.home.my_learning.MyDoubtsScreen
-import com.coaching.paatthya.ui.screens.home.my_learning.MyDownloadsScreen
-import com.coaching.paatthya.ui.screens.home.my_learning.NotesScreen
+import com.coaching.paatthya.ui.screens.home.my_learning.SavedLectureScreen
+import com.coaching.paatthya.ui.screens.home.my_learning.QuizAndTestsScreen
+import com.coaching.paatthya.ui.screens.home.my_learning.SavedNotesScreen
+import com.coaching.paatthya.ui.screens.home.my_learning.YoutuberLectureScreen
 import com.coaching.paatthya.ui.screens.home.result.ResultScreen
 import com.coaching.paatthya.ui.screens.home.study.LectureScreen
 import com.coaching.paatthya.ui.screens.home.termsandconditions.TermsAndConditionsScreen
@@ -41,9 +42,10 @@ fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
             Screen.ContactUsScreen -> ContactUsScreen()
             Screen.GalleryScreen -> GalleryScreen()
             Screen.MyBatchScreen -> MyBatchesScreen()
-            Screen.MyDoubtsScreen -> MyDoubtsScreen()
-            Screen.MyDownloadsScreen -> MyDownloadsScreen()
-            Screen.NotesScreen -> NotesScreen()
+            Screen.SavedLectureScreen -> SavedLectureScreen()
+            Screen.QuizAndTestsScreen -> QuizAndTestsScreen()
+            Screen.SavedNotesScreen -> SavedNotesScreen()
+            Screen.YoutubeLectureScreen -> YoutuberLectureScreen()
             Screen.ResultScreen -> ResultScreen()
             Screen.TermsAndConditionsScreen -> TermsAndConditionsScreen()
             is Screen.ExploreBatchScreen ->{

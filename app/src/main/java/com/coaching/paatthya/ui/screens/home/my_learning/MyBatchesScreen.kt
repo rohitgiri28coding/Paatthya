@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.MyBatchComponent
 import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.Spacing
@@ -61,7 +61,7 @@ fun MyBatchesScreen(myBatchesViewModel: MyBatchesViewModel = viewModel()) {
                         ){
                             NormalTextComposable(textValue = "No Batches Found", fontSize = 30.sp)
                             Spacing(size = 20.dp)
-                            ButtonComponent("Go to Buy Section") {
+                            RoundedButtonComponent("Go to Buy Section") {
 
                             }
                         }

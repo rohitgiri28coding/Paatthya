@@ -21,7 +21,7 @@ import com.coaching.paatthya.R
 import com.coaching.paatthya.domain.UserErrorEvent
 import com.coaching.paatthya.ui.ObserveEvents
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.ClickableLoginTextComponent
 import com.coaching.paatthya.ui.components.GoogleSignInButton
 import com.coaching.paatthya.ui.components.HeadingTextComposable
@@ -83,7 +83,7 @@ fun SignUpScreen(signUpViewModel: SignUpViewModel = hiltViewModel()){
                 }
             )
             Spacing()
-            ButtonComponent(value = stringResource(R.string.sign_up)) {
+            RoundedButtonComponent(value = stringResource(R.string.sign_up)) {
                 signUpViewModel.onEvent(AuthUiEvent.AuthButtonClicked)
             }
             GoogleSignInButton{

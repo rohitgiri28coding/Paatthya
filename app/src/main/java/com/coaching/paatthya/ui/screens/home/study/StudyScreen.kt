@@ -30,7 +30,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coaching.paatthya.R
-import com.coaching.paatthya.ui.components.ClickableImageComposable
+import com.coaching.paatthya.ui.components.ButtonComponent
 import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.Spacing
 import com.coaching.paatthya.ui.navigation.Router
@@ -94,24 +94,42 @@ fun StudyScreen(){
                 startPadding = 10.dp
             )
             Spacing()
-            Row (modifier = Modifier.fillMaxWidth().padding(4.dp), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_batches_tab_icon, contentDesc = "My Batches"){
-                    Router.navigateTo(Screen.MyBatchScreen)
-                }
-                Spacing(4.dp)
-                ClickableImageComposable(img = R.drawable.quiz_tab_icon, contentDesc = "Tests & Quiz"){
-                    Router.navigateTo(Screen.MyDownloadsScreen)
-                }
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp) // Better than SpaceEvenly for controlled spacing
+            ) {
+                ButtonComponent(
+                    text = "My Batches",
+                    icon = R.drawable.batch_icon,
+                    onClick = { Router.navigateTo(Screen.MyBatchScreen) },
+                    modifier = Modifier.weight(1f)
+                )
+                ButtonComponent(
+                    text = "Saved Lectures",
+                    icon = R.drawable.lec_icon,
+                    onClick = { Router.navigateTo(Screen.SavedLectureScreen) },
+                    modifier = Modifier.weight(1f)
+                )
             }
-            Spacing(size = 25.dp)
-            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly){
-                ClickableImageComposable(img = R.drawable.my_doubts_tab_icon, contentDesc = "My Doubts"){
-                    Router.navigateTo(Screen.MyDoubtsScreen)
-                }
-                ClickableImageComposable(img = R.drawable.notes_tab_icon, contentDesc = "Notes"){
-                    Router.navigateTo(Screen.NotesScreen)
-                }
+            Spacing(10.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ButtonComponent(
+                    text = "Quizes & Tests",
+                    icon = R.drawable.test_icon,
+                    onClick = { Router.navigateTo(Screen.QuizAndTestsScreen) },
+                    modifier = Modifier.weight(1f)
+                )
+                ButtonComponent(
+                    text = "Saved Notes",
+                    icon = R.drawable.notes_icon,
+                    onClick = { Router.navigateTo(Screen.SavedNotesScreen) },
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
         Spacing()

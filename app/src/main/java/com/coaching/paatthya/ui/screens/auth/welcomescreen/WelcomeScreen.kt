@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.coaching.paatthya.R
 import com.coaching.paatthya.ui.components.BackgroundImage
-import com.coaching.paatthya.ui.components.ButtonComponent
+import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.HeadingTextComposable
 import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.Spacing
@@ -36,7 +36,7 @@ fun WelcomeScreen(){
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Image(
-                painter = painterResource(id = R.drawable.paatthyalogo),
+                painter = painterResource(id = R.drawable.paatthya_app_logo),
                 contentDescription = stringResource(R.string.logo),
                 modifier = Modifier
                     .size(120.dp)
@@ -61,7 +61,7 @@ fun WelcomeScreen(){
                 Router.navigateTo(Screen.LoginScreen)
             }
             Spacer(modifier = Modifier.height(20.dp))
-            ButtonComponent(value = stringResource(R.string.sign_up)) {
+            RoundedButtonComponent (value = stringResource(R.string.sign_up)) {
                 Router.navigateTo(Screen.SignUpScreen)
             }
             Spacing(size = 60.dp)

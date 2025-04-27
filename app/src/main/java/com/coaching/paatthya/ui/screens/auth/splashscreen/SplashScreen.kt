@@ -59,7 +59,7 @@ fun SplashScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage()
         Image(
-            painter = painterResource(id = R.drawable.paatthyalogo),
+            painter = painterResource(id = R.drawable.oldlogo),
             contentDescription = "Paatthya Logo",
             modifier = Modifier
                 .align(Alignment.Center)
