@@ -1,5 +1,6 @@
 package com.coaching.paatthya.ui.screens.home.my_learning
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.coaching.paatthya.ui.viewmodel.home.Batches
@@ -27,7 +28,12 @@ class MyBatchesViewModel : ViewModel() {
 
     private suspend fun fetchAllBatches() {
         val doc = db.collection("batches").get().await()
-        _batches.value = doc.toObjects(Batches::class.java)
+        doc.forEach {
+            val batch = it.toObject(Batches::class.java)
+            _batches.value += batch
+            Log.d("MyBatchesViewModel", "Batch: ${batch.lectures}")
+        }
+
 
     }
 

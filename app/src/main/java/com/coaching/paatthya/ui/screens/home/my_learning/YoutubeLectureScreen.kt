@@ -18,7 +18,7 @@ import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
 import com.coaching.paatthya.ui.screens.home.YoutubePlayer
 
 @Composable
-fun YoutuberLectureScreen() {
+fun YoutuberLectureScreen(videoString: String) {
     val localLifecycle = LocalLifecycleOwner.current
     Surface {
         BackgroundImage()
@@ -29,11 +29,11 @@ fun YoutuberLectureScreen() {
             Column(modifier = Modifier
                 .padding(it)
                 .verticalScroll(rememberScrollState())) {
-                YoutubePlayer("8dEicZ0gMsw", localLifecycle)
+                YoutubePlayer(videoString, localLifecycle)
             }
         }
     }
     SystemBackButtonHandler {
-        Router.navigateTo(Screen.HomeScreen)
+        Router.navigateTo(Screen.MyBatchScreen)
     }
 }

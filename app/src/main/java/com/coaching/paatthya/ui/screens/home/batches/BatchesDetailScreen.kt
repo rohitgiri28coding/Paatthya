@@ -58,6 +58,7 @@ import com.coaching.paatthya.ui.components.NormalTextComposable
 import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
+import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
 import com.coaching.paatthya.ui.screens.home.my_learning.DetailBatchViewModel
 import com.coaching.paatthya.ui.theme.Primary
 import com.coaching.paatthya.ui.viewmodel.home.Batches
@@ -154,7 +155,13 @@ fun BatchDetailScreen(batch: Batches, detailBatchViewModel: DetailBatchViewModel
                                         title = lecture.lectureName,
                                     )
                                 ) {
-                                    Router.navigateTo(Screen.LectureScreen(lecture))
+                                    Log.d("LectureCard", "Lecture Card Clicked $lecture")
+//                                    if (lecture.isYTVideo){
+                                    if (lecture.lectureLink == "8dEicZ0gMsw"){
+                                        Router.navigateTo(Screen.YoutubeLectureScreen(lecture.lectureLink))
+                                    }else {
+                                        Router.navigateTo(Screen.LectureScreen(lecture))
+                                    }
                                 }
                             }
 
@@ -189,6 +196,9 @@ fun BatchDetailScreen(batch: Batches, detailBatchViewModel: DetailBatchViewModel
                 }
             }
         }
+    }
+    SystemBackButtonHandler {
+        Router.navigateTo(Screen.MyBatchScreen)
     }
 }
 

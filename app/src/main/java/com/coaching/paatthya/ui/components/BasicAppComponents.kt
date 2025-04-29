@@ -502,22 +502,17 @@ fun ClickableTextWithArrowSign(text: String, imageVector: ImageVector = Icons.De
         Box {
             Image(
                 painter = painterResource(id = R.drawable.rectangle_1),
-                contentDescription = "Rectangle"
+                contentDescription = "Rectangle",
+                modifier = Modifier.fillMaxWidth().padding(end = 45.dp)
             )
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 Text(
                     text = text,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 8.dp, start = 30.dp),
+                    modifier = Modifier.padding(top = 5.dp, bottom=5.dp, end = 45.dp),
                     fontFamily = FontFamily(Font(fontFamily, weight = FontWeight.W400))
                 )
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = imageVector,
-                        contentDescription = "RightArrow",
-                        tint = Color.White
-                    )
-                }
+
             }
         }
     }

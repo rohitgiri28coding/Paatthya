@@ -21,7 +21,7 @@ sealed class Screen {
     data object SavedLectureScreen: Screen()
     data object QuizAndTestsScreen: Screen()
     data object SavedNotesScreen : Screen()
-    data object YoutubeLectureScreen : Screen()
+    data class YoutubeLectureScreen (val videoString: String): Screen()
     data class LectureScreen(val lecture: Lecture) : Screen()
     data class DetailBatchScreen(val batch: Batches): Screen()
 

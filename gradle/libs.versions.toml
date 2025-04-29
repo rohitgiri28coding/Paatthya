@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
 chromecastSender = "0.28"
 coilCompose = "2.4.0"
 datastorePreferences = "1.1.4"

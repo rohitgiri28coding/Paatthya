@@ -23,8 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -48,14 +46,7 @@ fun StudyScreen(){
         .verticalScroll(rememberScrollState())) {
         Spacing()
         Column {
-            Text(
-                text = "HTML 1.0 2025",
-                fontFamily = FontFamily(Font(R.font.irish_grover_regular)),
-                fontSize = 20.sp,
-                color = Color.White,
-                modifier = Modifier.padding(start = 15.dp)
-            )
-            Spacing(size = 20.dp)
+
             Row (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center){
@@ -75,7 +66,7 @@ fun StudyScreen(){
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No Class Scheduled",
+                        text = "No Classes Scheduled",
                         fontFamily = irishFont,
                         fontSize = 23.sp,
                         color = Color(0xFFCACDD8)
