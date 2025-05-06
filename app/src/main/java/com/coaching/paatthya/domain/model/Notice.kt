@@ -1,10 +1,13 @@
 package com.coaching.paatthya.domain.model
 
+import com.google.firebase.Timestamp
+
 data class Notice(
+    val createdBy: String = "",
+    val creatorUid: String = "",
     val title: String = "",
     val description: String = "",
     val fileUrl: String = "",
     val fileType: String = "",
-    val isDownloaded: Boolean = false,
-    val timestamp: Long = 0
+    val timestamp: Timestamp
 )

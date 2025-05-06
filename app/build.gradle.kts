@@ -5,6 +5,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 
 }
 
@@ -90,5 +92,13 @@ dependencies {
     implementation(libs.androidx.media3.ui)
 //    implementation(libs.androidx.media3.exoplayer.dash) // Optional, if you're using DASH
     implementation(libs.androidx.media3.common)
+// Import the BoM for the Firebase platform
+    implementation(platform(libs.firebase.bom))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.perf)
 
 }

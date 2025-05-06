@@ -7,6 +7,5 @@ import com.coaching.paatthya.domain.model.Notice
 import kotlinx.coroutines.flow.Flow
 
 interface NoticeRepository {
-    fun fetchNotice(): Result<Flow<List<Notice>>, FirestoreDbError.NoticeError>
-    fun generateNewNotice(message: String, user: User): Result<Unit, FirestoreDbError.NoticeError>
+    suspend fun fetchNotice(): Result<Flow<List<Notice>>, FirestoreDbError.NoticeError>
 }

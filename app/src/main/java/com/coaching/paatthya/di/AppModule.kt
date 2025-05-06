@@ -9,7 +9,6 @@ import com.coaching.paatthya.domain.repository.AuthRepository
 import com.coaching.paatthya.domain.repository.NoticeRepository
 import com.coaching.paatthya.domain.repository.UserRepository
 import com.coaching.paatthya.domain.usecase.AuthDataValidation
-import com.coaching.paatthya.domain.usecase.CreateNoticeUseCase
 import com.coaching.paatthya.domain.usecase.EmailValidator
 import com.coaching.paatthya.domain.usecase.FetchNoticeUseCase
 import com.coaching.paatthya.domain.usecase.NameValidator
@@ -63,10 +62,6 @@ object AuthModule{
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
-    }
-    @Provides
-    fun provideCreateNoticeUseCase(noticeRepository: NoticeRepository): CreateNoticeUseCase {
-        return CreateNoticeUseCase(noticeRepository)
     }
     @Provides
     fun provideNoticeRepository(firestore: FirebaseFirestore): NoticeRepository {

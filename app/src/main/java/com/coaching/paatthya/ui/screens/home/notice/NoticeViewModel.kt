@@ -13,10 +13,14 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.coaching.paatthya.domain.Result
 import com.coaching.paatthya.domain.model.Notice
+import com.coaching.paatthya.domain.usecase.FetchNoticeUseCase
+import com.coaching.paatthya.ui.asUiText
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
@@ -27,18 +31,36 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.File
+import javax.inject.Inject
 import kotlin.apply
 import kotlin.collections.mapNotNull
 import kotlin.jvm.java
 import kotlin.text.substringAfterLast
 
-class NoticeViewModel: ViewModel() {
+@HiltViewModel
+class NoticeViewModel @Inject constructor(
+    fetchNoticeUseCase: FetchNoticeUseCase
+): ViewModel() {
     private val db = Firebase.firestore
     private val _notices = MutableStateFlow<List<Notice>>(emptyList())
     val notices: StateFlow<List<Notice>> = _notices
 
     init {
-       fetchNoticesRealtime()
+        viewModelScope.launch (Dispatchers.IO) {
+            when (val notice = fetchNoticeUseCase.invoke()) {
+                is Result.Error -> {
+                    val error = notice.error.asUiText()
+                    Log.d("NoticeViewModel", "Error fetching notices: $error")
+                }
+
+                is Result.Success -> {
+                    val notices = notice.data
+                    notices.collect {
+                        _notices.value = it
+                    }
+                }
+            }
+        }
     }
 
     fun fetchNoticesRealtime() {
