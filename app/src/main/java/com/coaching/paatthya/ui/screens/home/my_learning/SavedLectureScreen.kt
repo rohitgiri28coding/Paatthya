@@ -36,7 +36,7 @@ fun SavedLectureScreen() {
                     fileUrl = "",
                     fileType = "yt video"
                 )) {
-                    Router.navigateTo(Screen.YoutubeLectureScreen)
+                    Router.navigateTo(Screen.YoutubeLectureScreen("8dEicZ0gMsw"))
                 }
             }
         }

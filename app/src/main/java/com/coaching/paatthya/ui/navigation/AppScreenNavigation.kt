@@ -45,7 +45,10 @@ fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
             Screen.SavedLectureScreen -> SavedLectureScreen()
             Screen.QuizAndTestsScreen -> QuizAndTestsScreen()
             Screen.SavedNotesScreen -> SavedNotesScreen()
-            Screen.YoutubeLectureScreen -> YoutuberLectureScreen()
+            is Screen.YoutubeLectureScreen -> {
+                val videoString = (Router.currentScreen.value as Screen.YoutubeLectureScreen).videoString
+                YoutuberLectureScreen(videoString)
+            }
             Screen.ResultScreen -> ResultScreen()
             Screen.TermsAndConditionsScreen -> TermsAndConditionsScreen()
             is Screen.ExploreBatchScreen ->{

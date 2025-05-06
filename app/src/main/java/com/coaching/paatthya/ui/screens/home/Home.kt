@@ -194,7 +194,7 @@ private fun HomeTopAppBar(
 ) {
     TopAppBar(
         title = {
-            ClickableTextWithArrowSign(text = "Android Development", onClick = {})
+            ClickableTextWithArrowSign(text = "Paatthya", onClick = {})
         },
         navigationIcon = {
             IconButton(onClick = {
