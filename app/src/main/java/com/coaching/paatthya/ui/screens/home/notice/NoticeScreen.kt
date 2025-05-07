@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,19 +66,24 @@ fun NoticeScreen(viewModel: NoticeViewModel = viewModel()) {
         ) {
             items(notices.value) { notice ->
                 Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.paatthya_app_logo),
-                        contentDescription = "Profile",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(
-                                CircleShape
-                            ).align(Alignment.CenterVertically)
-                            .border(2.dp, Color.DarkGray, CircleShape)
-                            .size(50.dp)
-                    )
-                    NoticeCard(viewModel, notice, context)
-                }
+                    Column(modifier = Modifier.align(Alignment.CenterVertically).fillMaxWidth(0.15f)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.paatthya_app_logo),
+                            contentDescription = "Profile",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .clip(
+                                    CircleShape
+                                ).align(Alignment.CenterHorizontally)
+                                .border(2.dp, Color.DarkGray, CircleShape)
+                                .size(50.dp)
+                        )
+                        Text(notice.createdBy, color = Color.White,modifier = Modifier.align(Alignment.CenterHorizontally), overflow = TextOverflow.Ellipsis, maxLines = 1)
+
+                    }
+                        NoticeCard(viewModel, notice, context)
+                    }
+
             }
         }
     }
@@ -161,7 +167,7 @@ fun NoticeCard(viewModel: NoticeViewModel, notice: Notice, context: Context) {
                 color = Color(0xFFBBBBBB) // Softer white for readability
             )
             Text(
-                notice.fileType.uppercase(),
+                if (notice.fileType.isEmpty()) "ANNOUNCEMENTS" else notice.fileType.uppercase(),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF66FF66) // Neon green to match the theme

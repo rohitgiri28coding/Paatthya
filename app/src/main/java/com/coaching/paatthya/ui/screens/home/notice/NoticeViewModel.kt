@@ -17,9 +17,6 @@ import com.coaching.paatthya.domain.Result
 import com.coaching.paatthya.domain.model.Notice
 import com.coaching.paatthya.domain.usecase.FetchNoticeUseCase
 import com.coaching.paatthya.ui.asUiText
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,20 +25,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
-import kotlin.apply
-import kotlin.collections.mapNotNull
-import kotlin.jvm.java
-import kotlin.text.substringAfterLast
 
 @HiltViewModel
 class NoticeViewModel @Inject constructor(
     fetchNoticeUseCase: FetchNoticeUseCase
 ): ViewModel() {
-    private val db = Firebase.firestore
     private val _notices = MutableStateFlow<List<Notice>>(emptyList())
     val notices: StateFlow<List<Notice>> = _notices
 
@@ -62,19 +53,8 @@ class NoticeViewModel @Inject constructor(
             }
         }
     }
-
-    fun fetchNoticesRealtime() {
-        viewModelScope.launch {
-            val doc = db.collection("notices")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .get().await()
-            val noticeList = doc.documents.mapNotNull { it.toObject(Notice::class.java) }
-            _notices.emit(noticeList)
-            Log.d("NoticeViewModel", "Notices fetched: $noticeList")
-        }
-    }
     fun isDownloadable(fileType: String): Boolean {
-        return fileType != "announcements"
+        return fileType != "announcements" || fileType.isNotEmpty()
     }
 
     fun checkInDownloads(context: Context, url: String, type: String): Boolean {

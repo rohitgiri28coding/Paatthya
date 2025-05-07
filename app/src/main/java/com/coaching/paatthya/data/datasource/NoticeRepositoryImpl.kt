@@ -20,7 +20,7 @@ class NoticeRepositoryImpl @Inject constructor(private val firestore: FirebaseFi
             val noticesQuery = firestore
                 .collection("notices")
                 .orderBy(
-                    "dateTimeStamp",
+                    "timestamp",
                     Query.Direction.DESCENDING
                 )
             noticesQuery.addSnapshotListener { snapshot, exception ->
