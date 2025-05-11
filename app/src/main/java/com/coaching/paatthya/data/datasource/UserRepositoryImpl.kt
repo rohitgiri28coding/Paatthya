@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.coaching.paatthya.domain.FirestoreDbError
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.FirestoreDbError
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.model.User
 import com.coaching.paatthya.domain.repository.UserRepository
 import com.google.firebase.firestore.DocumentSnapshot

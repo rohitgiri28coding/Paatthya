@@ -23,6 +23,7 @@ import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
+import com.coaching.paatthya.ui.viewmodel.MyBatchesViewModel
 
 @Composable
 fun MyBatchesScreen(myBatchesViewModel: MyBatchesViewModel = viewModel()) {

@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.screens.home.my_learning
+package com.coaching.paatthya.ui.screens.ytplayer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,7 +15,6 @@ import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
-import com.coaching.paatthya.ui.screens.home.YoutubePlayer
 
 @Composable
 fun YoutuberLectureScreen(videoString: String) {

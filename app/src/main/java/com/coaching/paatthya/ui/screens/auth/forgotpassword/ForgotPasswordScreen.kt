@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.coaching.paatthya.R
-import com.coaching.paatthya.domain.UserErrorEvent
-import com.coaching.paatthya.ui.ObserveEvents
+import com.coaching.paatthya.domain.repository.UserErrorEvent
+import com.coaching.paatthya.ui.error.ObserveEvents
 import com.coaching.paatthya.ui.components.BackgroundImage
 import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.HeadingTextComposable

@@ -1,9 +1,9 @@
-package com.coaching.paatthya.ui
+package com.coaching.paatthya.ui.error
 
 import com.coaching.paatthya.R
-import com.coaching.paatthya.domain.AuthError
-import com.coaching.paatthya.domain.Error
-import com.coaching.paatthya.domain.FirestoreDbError
+import com.coaching.paatthya.domain.repository.AuthError
+import com.coaching.paatthya.domain.repository.Error
+import com.coaching.paatthya.domain.repository.FirestoreDbError
 
 fun Error.asUiText(): UiText {
     return when(this) {

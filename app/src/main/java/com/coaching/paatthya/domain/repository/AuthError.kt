@@ -1,6 +1,6 @@
-package com.coaching.paatthya.domain
+package com.coaching.paatthya.domain.repository
 
-sealed interface AuthError: Error{
+sealed interface AuthError: Error {
     enum class Network: AuthError{
         REQUEST_TIMEOUT,
         TOO_MANY_REQUESTS,

@@ -1,7 +1,7 @@
 package com.coaching.paatthya.domain.usecase
 
-import com.coaching.paatthya.domain.AuthError
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.AuthError
+import com.coaching.paatthya.domain.repository.Result
 
 class PasswordValidator {
     fun validatePassword(password: String): Result<Unit, AuthError.PasswordValidationError>{

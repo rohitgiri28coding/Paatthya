@@ -21,6 +21,7 @@ import com.coaching.paatthya.ui.components.Spacing
 import com.coaching.paatthya.ui.components.SwipeableBatchComponent
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
+import com.coaching.paatthya.ui.viewmodel.ViewAllBatchesViewModel
 
 @Composable
 fun ViewAllBatchesScreen(viewAllBatchesViewModel: ViewAllBatchesViewModel = viewModel()) {

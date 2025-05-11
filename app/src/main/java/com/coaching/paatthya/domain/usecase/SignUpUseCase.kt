@@ -1,8 +1,8 @@
 package com.coaching.paatthya.domain.usecase
 
 import android.util.Log
-import com.coaching.paatthya.domain.Error
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.Error
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.model.User
 import com.coaching.paatthya.domain.repository.AuthRepository
 import com.coaching.paatthya.domain.repository.UserRepository

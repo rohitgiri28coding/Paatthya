@@ -13,10 +13,10 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.model.Notice
 import com.coaching.paatthya.domain.usecase.FetchNoticeUseCase
-import com.coaching.paatthya.ui.asUiText
+import com.coaching.paatthya.ui.error.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

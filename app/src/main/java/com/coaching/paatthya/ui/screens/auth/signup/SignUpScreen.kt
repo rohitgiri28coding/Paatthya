@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.coaching.paatthya.R
-import com.coaching.paatthya.domain.UserErrorEvent
-import com.coaching.paatthya.ui.ObserveEvents
+import com.coaching.paatthya.domain.repository.UserErrorEvent
+import com.coaching.paatthya.ui.error.ObserveEvents
 import com.coaching.paatthya.ui.components.BackgroundImage
 import com.coaching.paatthya.ui.components.RoundedButtonComponent
 import com.coaching.paatthya.ui.components.ClickableLoginTextComponent
@@ -33,7 +33,7 @@ import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
 import com.coaching.paatthya.ui.theme.Primary
-import com.coaching.paatthya.ui.viewmodel.AuthUiEvent
+import com.coaching.paatthya.ui.screens.auth.AuthUiEvent
 import com.coaching.paatthya.ui.viewmodel.SignUpViewModel
 
 @Composable

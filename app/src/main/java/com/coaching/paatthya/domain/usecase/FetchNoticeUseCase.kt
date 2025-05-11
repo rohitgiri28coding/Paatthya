@@ -1,7 +1,7 @@
 package com.coaching.paatthya.domain.usecase
 
-import com.coaching.paatthya.domain.FirestoreDbError
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.FirestoreDbError
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.repository.NoticeRepository
 import com.coaching.paatthya.domain.model.Notice
 import kotlinx.coroutines.flow.Flow

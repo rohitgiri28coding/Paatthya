@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.viewmodel
+package com.coaching.paatthya.ui.screens.auth
 
 import android.content.Context
 

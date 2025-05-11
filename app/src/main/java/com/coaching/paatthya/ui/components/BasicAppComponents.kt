@@ -93,7 +93,7 @@ import com.coaching.paatthya.ui.theme.interVariableFont
 import com.coaching.paatthya.ui.theme.kanit_light
 import com.coaching.paatthya.ui.theme.quicksandVariableFont
 import com.coaching.paatthya.ui.theme.sedanRegular
-import com.coaching.paatthya.ui.viewmodel.home.Batches
+import com.coaching.paatthya.domain.model.Batches
 import java.text.NumberFormat
 import java.util.Locale
 

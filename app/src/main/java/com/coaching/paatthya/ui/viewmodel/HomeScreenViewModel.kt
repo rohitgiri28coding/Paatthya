@@ -18,13 +18,13 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.usecase.SignOutUseCase
 import com.coaching.paatthya.ui.navigation.HomeScreen
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
-import com.coaching.paatthya.ui.viewmodel.home.BottomNavigationItem
-import com.coaching.paatthya.ui.viewmodel.home.NavigationItem
+import com.coaching.paatthya.domain.model.BottomNavigationItem
+import com.coaching.paatthya.domain.model.NavigationItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

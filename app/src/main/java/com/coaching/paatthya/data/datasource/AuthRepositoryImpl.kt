@@ -7,8 +7,8 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import com.coaching.paatthya.data.core.Constants
-import com.coaching.paatthya.domain.AuthError
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.AuthError
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.model.User
 import com.coaching.paatthya.domain.repository.AuthRepository
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption

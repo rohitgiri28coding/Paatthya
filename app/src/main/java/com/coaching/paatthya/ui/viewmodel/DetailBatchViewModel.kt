@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.screens.home.my_learning
+package com.coaching.paatthya.ui.viewmodel
 
 import android.app.DownloadManager
 import android.content.Context
@@ -24,7 +24,10 @@ class DetailBatchViewModel: ViewModel() {
 
     fun checkInDownloads(context: Context, url: String, type: String): Boolean {
         val fileName = url.substringAfterLast("/") // Extract filename from URL
-        val file = File(Environment.getExternalStoragePublicDirectory("Download/Paatthya/batch/$type"), fileName)
+        val file = File(
+            Environment.getExternalStoragePublicDirectory("Download/Paatthya/batch/$type"),
+            fileName
+        )
         if (file.exists()) {
             openFile(context, file, type)
             return false
@@ -32,7 +35,10 @@ class DetailBatchViewModel: ViewModel() {
         return true
     }
     fun downloadFile(context: Context, url: String, fileName: String, type: String): Long {
-        val subfolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Paatthya/batch/$type")
+        val subfolder = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            "Paatthya/batch/$type"
+        )
         if (!subfolder.exists()) {
             subfolder.mkdirs()
         }
@@ -87,7 +93,10 @@ class DetailBatchViewModel: ViewModel() {
 
     fun openContentFile(context: Context, url: String, type: String) {
         val fileName = url.substringAfterLast("/")
-        val file = File(Environment.getExternalStoragePublicDirectory("Download/Paatthya/batch/$type"), fileName)
+        val file = File(
+            Environment.getExternalStoragePublicDirectory("Download/Paatthya/batch/$type"),
+            fileName
+        )
 
         if (file.exists()) {
             openFile(context, file, type)
@@ -154,7 +163,7 @@ class DetailBatchViewModel: ViewModel() {
                     }
                     cursor.close()
                 } else {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         onError("Cursor was null")
                         onCancel.invoke()
                     }

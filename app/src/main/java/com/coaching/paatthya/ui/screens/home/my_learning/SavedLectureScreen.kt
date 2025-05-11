@@ -15,7 +15,7 @@ import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
-import com.coaching.paatthya.ui.screens.home.batches.ContentItem
+import com.coaching.paatthya.domain.model.ContentItem
 import com.coaching.paatthya.ui.screens.home.batches.LectureCard
 
 @Composable

@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.screens.home.batches
+package com.coaching.paatthya.domain.model
 
 data class ContentItem(
     val index: Int,

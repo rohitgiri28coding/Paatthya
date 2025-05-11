@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui
+package com.coaching.paatthya.ui.error
 
 import android.content.Context
 import androidx.annotation.StringRes

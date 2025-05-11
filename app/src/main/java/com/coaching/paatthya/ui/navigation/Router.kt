@@ -2,8 +2,8 @@ package com.coaching.paatthya.ui.navigation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.coaching.paatthya.ui.viewmodel.home.Batches
-import com.coaching.paatthya.ui.viewmodel.home.Lecture
+import com.coaching.paatthya.domain.model.Batches
+import com.coaching.paatthya.domain.model.Lecture
 
 sealed class Screen {
     data object SplashScreen : Screen()

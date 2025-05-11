@@ -29,7 +29,7 @@ import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
 import com.coaching.paatthya.ui.theme.interVariableFont
-import com.coaching.paatthya.ui.viewmodel.home.Batches
+import com.coaching.paatthya.domain.model.Batches
 
 @Composable
 fun ExploreBatchScreen(batch: Batches){

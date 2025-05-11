@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.screens.home
+package com.coaching.paatthya.ui.screens.ytplayer
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

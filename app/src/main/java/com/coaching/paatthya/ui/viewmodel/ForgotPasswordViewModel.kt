@@ -3,10 +3,10 @@ package com.coaching.paatthya.ui.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coaching.paatthya.domain.Result
-import com.coaching.paatthya.domain.UserErrorEvent
+import com.coaching.paatthya.domain.repository.Result
+import com.coaching.paatthya.domain.repository.UserErrorEvent
 import com.coaching.paatthya.domain.usecase.ForgotPasswordUseCase
-import com.coaching.paatthya.ui.asUiText
+import com.coaching.paatthya.ui.error.asUiText
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,6 +1,6 @@
-package com.coaching.paatthya.domain
+package com.coaching.paatthya.domain.repository
 
-sealed interface FirestoreDbError: Error{
+sealed interface FirestoreDbError: Error {
     enum class DBError: FirestoreDbError{
         NO_INTERNET,
         SERVER_ERROR,

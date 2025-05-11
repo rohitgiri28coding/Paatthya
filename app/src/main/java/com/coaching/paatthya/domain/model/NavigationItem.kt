@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui.viewmodel.home
+package com.coaching.paatthya.domain.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.coaching.paatthya.ui.navigation.Screen

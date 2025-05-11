@@ -1,9 +1,9 @@
-package com.coaching.paatthya.ui.screens.home.batches
+package com.coaching.paatthya.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coaching.paatthya.ui.viewmodel.home.Batches
+import com.coaching.paatthya.domain.model.Batches
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,8 @@ class ViewAllBatchesViewModel: ViewModel() {
     val upcomingBatches: StateFlow<List<Batches>> = _upcomingBatches
     private val _ongoingBatches: MutableStateFlow<List<Batches>> = MutableStateFlow(emptyList())
     val ongoingBatches: StateFlow<List<Batches>> = _ongoingBatches
-    private val _limitedTimeDealBatches: MutableStateFlow<List<Batches>> = MutableStateFlow(emptyList())
+    private val _limitedTimeDealBatches: MutableStateFlow<List<Batches>> =
+        MutableStateFlow(emptyList())
     val limitedTimeDealBatches: StateFlow<List<Batches>> = _limitedTimeDealBatches
     private val currentTime = getCurrentDateFormatted()
 

@@ -1,4 +1,4 @@
-package com.coaching.paatthya.ui
+package com.coaching.paatthya.ui.error
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

@@ -20,7 +20,7 @@ import com.coaching.paatthya.ui.screens.home.my_learning.MyBatchesScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.SavedLectureScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.QuizAndTestsScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.SavedNotesScreen
-import com.coaching.paatthya.ui.screens.home.my_learning.YoutuberLectureScreen
+import com.coaching.paatthya.ui.screens.ytplayer.YoutuberLectureScreen
 import com.coaching.paatthya.ui.screens.home.result.ResultScreen
 import com.coaching.paatthya.ui.screens.home.study.LectureScreen
 import com.coaching.paatthya.ui.screens.home.termsandconditions.TermsAndConditionsScreen

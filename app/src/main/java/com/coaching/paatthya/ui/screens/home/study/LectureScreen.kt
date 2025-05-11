@@ -30,7 +30,7 @@ import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
-import com.coaching.paatthya.ui.viewmodel.home.Lecture
+import com.coaching.paatthya.domain.model.Lecture
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @RequiresApi(Build.VERSION_CODES.R)

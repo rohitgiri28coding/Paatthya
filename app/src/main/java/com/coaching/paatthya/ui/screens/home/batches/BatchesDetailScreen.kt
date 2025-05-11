@@ -59,9 +59,10 @@ import com.coaching.paatthya.ui.components.TopAppBarWithBackButton
 import com.coaching.paatthya.ui.navigation.Router
 import com.coaching.paatthya.ui.navigation.Screen
 import com.coaching.paatthya.ui.navigation.SystemBackButtonHandler
-import com.coaching.paatthya.ui.screens.home.my_learning.DetailBatchViewModel
+import com.coaching.paatthya.ui.viewmodel.DetailBatchViewModel
 import com.coaching.paatthya.ui.theme.Primary
-import com.coaching.paatthya.ui.viewmodel.home.Batches
+import com.coaching.paatthya.domain.model.Batches
+import com.coaching.paatthya.domain.model.ContentItem
 
 @Composable
 fun BatchDetailScreen(batch: Batches, detailBatchViewModel: DetailBatchViewModel = viewModel()) {

@@ -1,8 +1,8 @@
 package com.coaching.paatthya.data.datasource
 
 import android.util.Log
-import com.coaching.paatthya.domain.FirestoreDbError
-import com.coaching.paatthya.domain.Result
+import com.coaching.paatthya.domain.repository.FirestoreDbError
+import com.coaching.paatthya.domain.repository.Result
 import com.coaching.paatthya.domain.model.Notice
 import com.coaching.paatthya.domain.repository.NoticeRepository
 import com.google.firebase.firestore.FirebaseFirestore
