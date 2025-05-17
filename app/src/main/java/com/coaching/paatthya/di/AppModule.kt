@@ -5,6 +5,8 @@ import android.content.Context
 import com.coaching.paatthya.data.datasource.AuthRepositoryImpl
 import com.coaching.paatthya.data.datasource.NoticeRepositoryImpl
 import com.coaching.paatthya.data.datasource.UserRepositoryImpl
+import com.coaching.paatthya.data.logger.DefaultLogger
+import com.coaching.paatthya.domain.logger.Logger
 import com.coaching.paatthya.domain.repository.AuthRepository
 import com.coaching.paatthya.domain.repository.NoticeRepository
 import com.coaching.paatthya.domain.repository.UserRepository
@@ -13,6 +15,7 @@ import com.coaching.paatthya.domain.usecase.EmailValidator
 import com.coaching.paatthya.domain.usecase.FetchNoticeUseCase
 import com.coaching.paatthya.domain.usecase.NameValidator
 import com.coaching.paatthya.domain.usecase.PasswordValidator
+import com.coaching.paatthya.domain.usecase.SignInUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -71,4 +74,19 @@ object AuthModule{
     fun provideFetchNoticeUseCase(noticeRepository: NoticeRepository): FetchNoticeUseCase{
         return FetchNoticeUseCase(noticeRepository)
     }
+    @Provides
+    fun provideSignInUseCase(
+        authRepository: AuthRepository,
+        authValidator: AuthDataValidation,
+        userRepository: UserRepository,
+        logger: Logger
+    ): SignInUseCase {
+        return SignInUseCase(authRepository, authValidator, userRepository, logger)
+    }
+    @Provides
+    @Singleton
+    fun provideLogger(): Logger {
+        return DefaultLogger()
+    }
+
 }

@@ -9,6 +9,10 @@ sealed interface AuthError: Error {
         SERIALIZATION,
         UNKNOWN_ERROR
     }
+    enum class DatabaseUpdateFailed: AuthError{
+        FIRESTORE_ERROR,
+        UNKNOWN_ERROR
+    }
     enum class Local: AuthError{
         DISK_FULL
     }

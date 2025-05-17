@@ -22,6 +22,8 @@ private fun AuthError.asAuthUiText(): UiText {
         is AuthError.PasswordValidationError -> this.asPasswordValidationErrorUiText()
         is AuthError.SignInError -> this.asSignInErrorUiText()
         is AuthError.NameValidationError -> this.asNameValidationErrorUiText()
+        AuthError.DatabaseUpdateFailed.FIRESTORE_ERROR -> UiText.StringResource(R.string.firestore_error)
+        AuthError.DatabaseUpdateFailed.UNKNOWN_ERROR -> UiText.StringResource(R.string.unknown_error)
     }
 }
 private fun AuthError.EmailValidationError.asEmailValidationErrorUiText(): UiText {

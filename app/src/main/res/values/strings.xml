@@ -48,4 +48,5 @@
     <string name="name_cannot_be_empty">Name cannot be empty.</string>
     <string name="invalid_name">Enter a valid name.</string>
     <string name="serialization_error">Unable to serialize the output.</string>
+    <string name="firestore_error">Firestre database update unsuccessful.</string>
 </resources>
