@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.coaching.paatthya.ui.navigation.AppScreenNavigation
+import com.coaching.paatthya.ui.navigation.AppEntryPoint
 import com.coaching.paatthya.ui.theme.PaatthyaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PaatthyaTheme {
-                AppScreenNavigation()
+                AppEntryPoint()
             }
         }
     }

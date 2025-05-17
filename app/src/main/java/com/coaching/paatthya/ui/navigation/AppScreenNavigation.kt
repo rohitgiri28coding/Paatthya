@@ -9,7 +9,6 @@ import com.coaching.paatthya.ui.screens.auth.forgotpassword.ForgotPasswordScreen
 import com.coaching.paatthya.ui.screens.auth.forgotpassword.ForgotPasswordScreenResetLinkSent
 import com.coaching.paatthya.ui.screens.auth.login.LoginScreen
 import com.coaching.paatthya.ui.screens.auth.signup.SignUpScreen
-import com.coaching.paatthya.ui.screens.auth.splashscreen.SplashScreen
 import com.coaching.paatthya.ui.screens.auth.welcomescreen.WelcomeScreen
 import com.coaching.paatthya.ui.screens.home.Home
 import com.coaching.paatthya.ui.screens.home.batches.BatchDetailScreen
@@ -17,12 +16,12 @@ import com.coaching.paatthya.ui.screens.home.batches.ExploreBatchScreen
 import com.coaching.paatthya.ui.screens.home.contactus.ContactUsScreen
 import com.coaching.paatthya.ui.screens.home.gallery.GalleryScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.MyBatchesScreen
-import com.coaching.paatthya.ui.screens.home.my_learning.SavedLectureScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.QuizAndTestsScreen
+import com.coaching.paatthya.ui.screens.home.my_learning.SavedLectureScreen
 import com.coaching.paatthya.ui.screens.home.my_learning.SavedNotesScreen
-import com.coaching.paatthya.ui.screens.ytplayer.YoutuberLectureScreen
 import com.coaching.paatthya.ui.screens.home.result.ResultScreen
 import com.coaching.paatthya.ui.screens.home.study.LectureScreen
+import com.coaching.paatthya.ui.screens.home.study.ytplayer.YoutuberLectureScreen
 import com.coaching.paatthya.ui.screens.home.termsandconditions.TermsAndConditionsScreen
 import com.coaching.paatthya.ui.viewmodel.AuthViewModel
 
@@ -32,7 +31,6 @@ fun AppScreenNavigation (authViewModel: AuthViewModel = hiltViewModel()){
 
     Crossfade(targetState = Router.currentScreen, label = "") { currentState ->
         when (currentState.value) {
-            Screen.SplashScreen -> SplashScreen()
             Screen.WelcomeScreen -> WelcomeScreen()
             Screen.ForgotPasswordResetLinkSentScreen -> ForgotPasswordScreenResetLinkSent()
             Screen.ForgotPasswordScreen -> ForgotPasswordScreen()

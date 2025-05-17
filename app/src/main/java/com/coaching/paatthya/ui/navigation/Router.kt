@@ -6,7 +6,6 @@ import com.coaching.paatthya.domain.model.Batches
 import com.coaching.paatthya.domain.model.Lecture
 
 sealed class Screen {
-    data object SplashScreen : Screen()
     data object SignUpScreen : Screen()
     data object LoginScreen : Screen()
     data object ForgotPasswordScreen : Screen()
@@ -24,7 +23,6 @@ sealed class Screen {
     data class YoutubeLectureScreen (val videoString: String): Screen()
     data class LectureScreen(val lecture: Lecture) : Screen()
     data class DetailBatchScreen(val batch: Batches): Screen()
-
     data class ExploreBatchScreen(val batch: Batches): Screen()
 }
 
